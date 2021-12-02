@@ -539,6 +539,8 @@ class Ui_MainWindow(object):
         self.numChunks=0
         #setting order default to 1
         self.InterpolationOrder=self.InterPolationOrderSlider.value()
+        self.lcdOrder.display(self.InterpolationOrder)
+
         #diasbling the num spinbox by default to avoid errors
         self.NumberChunksSpinBox.setDisabled(True)
         #changing LCD color
@@ -649,15 +651,15 @@ class Ui_MainWindow(object):
     def InterpolationOrdersetting(self, val):
         self.InterpolationOrder=val
         self.ChooseOrderComboBoxEdit()
-        if val==0:
-            self.xAxisInterpolationRadioBtn.setChecked(False)
-            self.xAxisNumChunksRadioBtn.setChecked(False)
-            self.yAxisNumChunksRadioBtn.setChecked(False)
-            self.yAxisInterpolationRadioBtn.setChecked(False)
+        #if val==0:
+         #   self.xAxisInterpolationRadioBtn.setChecked(False)
+          #  self.xAxisNumChunksRadioBtn.setChecked(False)
+           # self.yAxisNumChunksRadioBtn.setChecked(False)
+            #self.yAxisInterpolationRadioBtn.setChecked(False)
     
     def ExtrapolationCoefEdit(self, val):
         self.ExtrapolationCoef=val*10
-        print(self.ExtrapolationCoef)
+        
     def exit(self):
         sys.exit()
 
