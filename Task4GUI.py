@@ -168,7 +168,7 @@ class Ui_MainWindow(object):
         self.MultipleChunksRadioButton.setObjectName("MultipleChunksRadioButton")
         self.verticalLayout_3.addWidget(self.MultipleChunksRadioButton)
         self.NumberChunksSpinBox = QtWidgets.QSpinBox(self.widget)
-        self.NumberChunksSpinBox.setMaximum(10)
+        self.NumberChunksSpinBox.setMaximum(999)
         self.NumberChunksSpinBox.setObjectName("NumberChunksSpinBox")
         self.verticalLayout_3.addWidget(self.NumberChunksSpinBox)
         self.toolBox.addItem(self.page, "")
@@ -517,6 +517,11 @@ class Ui_MainWindow(object):
         self.actionErrorZoom_out_2.triggered.connect(lambda: self.zoomOut(1))
         self.OneChunkRadioButton.toggled.connect(lambda: self.NumberChunksSpinBoxDisable())
         self.MultipleChunksRadioButton.toggled.connect(lambda: self.NumberChunksSpinBoxEnable())
+        self.NumberChunksSpinBox.valueChanged.connect(lambda: self.SetNumChunks(self.NumberChunksSpinBox.value()))
+        self.xAxisInterpolationRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("X","Inter"))
+        self.xAxisNumChunksRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("X","Chunks"))
+        self.yAxisInterpolationRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Inter"))
+        self.yAxisNumChunksRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Chunks"))
 
         #golbal varaibles of constants declaration
         self.time1=0
@@ -526,6 +531,9 @@ class Ui_MainWindow(object):
         self.signalYMax=0
         self.signalXmin=0
         self.signalXmax=0
+        self.numChunks=0
+        #diasbling the num spinbox by default to avoid errors
+        self.NumberChunksSpinBox.setDisabled(True)
         
 
         #Functions declarations
@@ -568,9 +576,32 @@ class Ui_MainWindow(object):
 
     def NumberChunksSpinBoxDisable(self):
         self.NumberChunksSpinBox.setDisabled(True)
+        self.numChunks=1
 
     def NumberChunksSpinBoxEnable(self):
         self.NumberChunksSpinBox.setDisabled(False)
+
+    def SetNumChunks(self,val):
+        self.numChunks=val
+        print("num Chunks   ")
+        print(self.numChunks)
+
+    def ErrorOptionsEnabling(self, axis, type):
+        if axis=="X":
+            if type =="Inter":
+                self.yAxisInterpolationRadioBtn.setDisabled(True)
+                self.yAxisNumChunksRadioBtn.setDisabled(False)
+            else:
+                self.yAxisNumChunksRadioBtn.setDisabled(True)
+                self.yAxisInterpolationRadioBtn.setDisabled(False)
+        else:
+            if type =="Inter":
+                self.xAxisInterpolationRadioBtn.setDisabled(True)
+                self.xAxisNumChunksRadioBtn.setDisabled(False)
+
+            else:
+                self.xAxisNumChunksRadioBtn.setDisabled(True)
+                self.xAxisInterpolationRadioBtn.setDisabled(False)
 
 
 if __name__ == "__main__":
