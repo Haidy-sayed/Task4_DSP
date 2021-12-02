@@ -515,6 +515,8 @@ class Ui_MainWindow(object):
         self.actionErrorZoom_in_2.triggered.connect(lambda: self.zoomIn(1))
         self.actioncurveZoom_out.triggered.connect(lambda: self.zoomOut(0))
         self.actionErrorZoom_out_2.triggered.connect(lambda: self.zoomOut(1))
+        self.OneChunkRadioButton.toggled.connect(lambda: self.NumberChunksSpinBoxDisable())
+        self.MultipleChunksRadioButton.toggled.connect(lambda: self.NumberChunksSpinBoxEnable())
 
         #golbal varaibles of constants declaration
         self.time1=0
@@ -563,6 +565,12 @@ class Ui_MainWindow(object):
     
     def zoomOut(self):
         self.CurveFittingGraph.getViewBox().scaleBy((2,2))
+
+    def NumberChunksSpinBoxDisable(self):
+        self.NumberChunksSpinBox.setDisabled(True)
+
+    def NumberChunksSpinBoxEnable(self):
+        self.NumberChunksSpinBox.setDisabled(False)
 
 
 if __name__ == "__main__":
