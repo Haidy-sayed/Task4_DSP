@@ -577,6 +577,7 @@ class Ui_MainWindow(object):
     def NumberChunksSpinBoxDisable(self):
         self.NumberChunksSpinBox.setDisabled(True)
         self.numChunks=1
+        self.ChunkNumberComboBoxEdit()
         self.MathDisplayArea.setRowCount(self.numChunks)
 
 
