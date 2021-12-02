@@ -526,6 +526,7 @@ class Ui_MainWindow(object):
         self.yAxisNumChunksRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Chunks"))
         self.actionExit.triggered.connect(lambda: self.exit())
         self.InterPolationOrderSlider.valueChanged.connect(lambda: self.InterpolationOrdersetting(self.InterPolationOrderSlider.value()))
+        self.ExtrapolationEfficiencySlider.valueChanged.connect(lambda: self.ExtrapolationCoefEdit(self.ExtrapolationEfficiencySlider.value()))
 
         #golbal varaibles of constants declaration
         self.time1=0
@@ -542,6 +543,8 @@ class Ui_MainWindow(object):
         self.NumberChunksSpinBox.setDisabled(True)
         #changing LCD color
         self.lcdOrder.setStyleSheet('background-color:black')
+        #setting extrapolation coeff to 100% by default
+        self.ExtrapolationCoef=10
 
         
 
@@ -651,7 +654,10 @@ class Ui_MainWindow(object):
             self.xAxisNumChunksRadioBtn.setChecked(False)
             self.yAxisNumChunksRadioBtn.setChecked(False)
             self.yAxisInterpolationRadioBtn.setChecked(False)
-
+    
+    def ExtrapolationCoefEdit(self, val):
+        self.ExtrapolationCoef=val*10
+        print(self.ExtrapolationCoef)
     def exit(self):
         sys.exit()
 
