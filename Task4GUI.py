@@ -537,6 +537,8 @@ class Ui_MainWindow(object):
         self.signalXmin=0
         self.signalXmax=0
         self.numChunks=0
+        self.axis=""
+        self.type=""
         #setting order default to 1
         self.InterpolationOrder=self.InterPolationOrderSlider.value()
         self.lcdOrder.display(self.InterpolationOrder)
@@ -571,7 +573,6 @@ class Ui_MainWindow(object):
 
     def settingCurveLimits(self):
         self.CurveFittingGraph.setLimits(xMin=self.signalXMin)
-        self.CurveFittingGraph.setLimits(xMax=self.signalXMax)
         self.CurveFittingGraph.setLimits(yMin=self.signalYMin)
         self.CurveFittingGraph.setLimits(yMax=self.signalYMax)
 
@@ -595,6 +596,7 @@ class Ui_MainWindow(object):
         self.NumberChunksSpinBox.setDisabled(True)
         self.numChunks=1
         self.ChunkNumberComboBoxEdit()
+        self.ErrorOptionsEnabling(self.axis,self.type)
         self.MathDisplayArea.setRowCount(self.numChunks)
 
 
@@ -605,10 +607,13 @@ class Ui_MainWindow(object):
         self.numChunks=val
         self.MathDisplayArea.setRowCount(self.numChunks)
         self.ChunkNumberComboBoxEdit()
+        self.ErrorOptionsEnabling(self.axis,self.type)
         print("num Chunks   ")
         print(self.numChunks)
 
     def ErrorOptionsEnabling(self, axis, type):
+        self.axis=axis
+        self.type=type
         if axis=="X":
             if type =="Inter":
                 self.yAxisInterpolationRadioBtn.setDisabled(True)
@@ -624,7 +629,7 @@ class Ui_MainWindow(object):
                 self.ErrorMapYaxis="Inter"
                 self.ErrorMappingGraph.setRowCount(self.numChunks)
                 self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
-        else:
+        elif axis=="Y":
             if type =="Inter":
                 self.xAxisInterpolationRadioBtn.setDisabled(True)
                 self.xAxisNumChunksRadioBtn.setDisabled(False)
@@ -645,15 +650,22 @@ class Ui_MainWindow(object):
     def ChunkNumberComboBoxEdit(self):
         self.ChooseChunkComboBox.clear()
         self.ChunkNumberComboBox.clear()
+        
         for i in np.arange(1,self.numChunks+1):
             self.ChunkNumberComboBox.addItem(str("Chunk # " +str(i)))
             self.ChooseChunkComboBox.addItem(str("Chunk # " +str(i)))
+
+        self.ErrorOptionsEnabling(self.axis,self.type)
+
     
     def ChooseOrderComboBoxEdit(self):
         self.ChooseOrderComboBox.clear()
         self.lcdOrder.display(self.InterpolationOrder)
         for j in np.arange(1,self.InterpolationOrder+1):
             self.ChooseOrderComboBox.addItem(str("Order # " +str(j)))
+
+        self.ErrorOptionsEnabling(self.axis,self.type)
+
 
 
     
