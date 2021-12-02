@@ -497,7 +497,7 @@ class Ui_MainWindow(object):
         self.actionOpen_File.setShortcut(_translate("MainWindow", "Ctrl+O"))
         self.actionSave_Curve_fitting_IMG.setText(_translate("MainWindow", "Save Curve fitting IMG"))
         self.actionExit.setText(_translate("MainWindow", "Exit"))
-        self.actionExit.setShortcut(_translate("MainWindow", "Esc"))
+        self.actionExit.setShortcut(_translate("MainWindow", "esc"))
         self.actionCurveZoom_in.setText(_translate("MainWindow", "Zoom in"))
         self.actionCurveZoom_in.setShortcut(_translate("MainWindow", "+"))
         self.actioncurveZoom_out.setText(_translate("MainWindow", "Zoom out"))
@@ -522,6 +522,7 @@ class Ui_MainWindow(object):
         self.xAxisNumChunksRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("X","Chunks"))
         self.yAxisInterpolationRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Inter"))
         self.yAxisNumChunksRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Chunks"))
+        self.actionExit.triggered.connect(lambda: self.exit())
 
         #golbal varaibles of constants declaration
         self.time1=0
@@ -622,6 +623,9 @@ class Ui_MainWindow(object):
         for i in np.arange(1,self.numChunks+1):
             self.ChunkNumberComboBox.addItem(str("Chunk # " +str(i)))
             self.ChooseChunkComboBox.addItem(str("Chunk # " +str(i)))
+
+    def exit(self):
+        sys.exit()
 
 
 if __name__ == "__main__":
