@@ -186,8 +186,9 @@ class Ui_MainWindow(object):
         self.label_6.setObjectName("label_6")
         self.InterPolationOrderSlider = QtWidgets.QSlider(self.page_2)
         self.InterPolationOrderSlider.setGeometry(QtCore.QRect(80, 210, 22, 171))
-        self.InterPolationOrderSlider.setMaximum(9)
-        self.InterPolationOrderSlider.setPageStep(9)
+        self.InterPolationOrderSlider.setMaximum(10)
+        self.InterPolationOrderSlider.setPageStep(10)
+        self.InterPolationOrderSlider.setValue(1)
         self.InterPolationOrderSlider.setOrientation(QtCore.Qt.Vertical)
         self.InterPolationOrderSlider.setTickPosition(QtWidgets.QSlider.TicksAbove)
         self.InterPolationOrderSlider.setObjectName("InterPolationOrderSlider")
@@ -363,6 +364,7 @@ class Ui_MainWindow(object):
         self.ChooseOrderComboBox = QtWidgets.QComboBox(self.widget_3)
         self.ChooseOrderComboBox.setGeometry(QtCore.QRect(140, 50, 131, 22))
         self.ChooseOrderComboBox.setObjectName("ChooseOrderComboBox")
+        self.ChooseOrderComboBox.setMaxCount(999)
         self.verticalLayout_5.addWidget(self.widget_3)
         self.horizontalLayout.addWidget(self.DataContainer)
         self.line = QtWidgets.QFrame(self.centralwidget)
@@ -523,6 +525,7 @@ class Ui_MainWindow(object):
         self.yAxisInterpolationRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Inter"))
         self.yAxisNumChunksRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Chunks"))
         self.actionExit.triggered.connect(lambda: self.exit())
+        self.InterPolationOrderSlider.valueChanged.connect(lambda: self.InterpolationOrdersetting(self.InterPolationOrderSlider.value()))
 
         #golbal varaibles of constants declaration
         self.time1=0
@@ -533,8 +536,13 @@ class Ui_MainWindow(object):
         self.signalXmin=0
         self.signalXmax=0
         self.numChunks=0
+        #setting order default to 1
+        self.InterpolationOrder=self.InterPolationOrderSlider.value()
         #diasbling the num spinbox by default to avoid errors
         self.NumberChunksSpinBox.setDisabled(True)
+        #changing LCD color
+        self.lcdOrder.setStyleSheet('background-color:black')
+
         
 
         #Functions declarations
@@ -567,6 +575,9 @@ class Ui_MainWindow(object):
         self.amp1=amp
         self.index=0  
         self.CurveFittingGraph.plot(self.time1[0:self.index+1000], self.amp1[0:self.index+1000], pen="#683b94")
+        self.InterpolationOrdersetting()
+        self.ChunkNumberComboBox()
+        self.ChooseChunkComboBox()
 
     def zoomIn(self, val):
         self.CurveFittingGraph.getViewBox().scaleBy((0.5,0.5))
@@ -623,6 +634,23 @@ class Ui_MainWindow(object):
         for i in np.arange(1,self.numChunks+1):
             self.ChunkNumberComboBox.addItem(str("Chunk # " +str(i)))
             self.ChooseChunkComboBox.addItem(str("Chunk # " +str(i)))
+    
+    def ChooseOrderComboBoxEdit(self):
+        self.ChooseOrderComboBox.clear()
+        self.lcdOrder.display(self.InterpolationOrder)
+        for j in np.arange(1,self.InterpolationOrder+1):
+            self.ChooseOrderComboBox.addItem(str("Order # " +str(j)))
+
+
+    
+    def InterpolationOrdersetting(self, val):
+        self.InterpolationOrder=val
+        self.ChooseOrderComboBoxEdit()
+        if val==0:
+            self.xAxisInterpolationRadioBtn.setChecked(False)
+            self.xAxisNumChunksRadioBtn.setChecked(False)
+            self.yAxisNumChunksRadioBtn.setChecked(False)
+            self.yAxisInterpolationRadioBtn.setChecked(False)
 
     def exit(self):
         sys.exit()
