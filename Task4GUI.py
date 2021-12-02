@@ -577,12 +577,15 @@ class Ui_MainWindow(object):
     def NumberChunksSpinBoxDisable(self):
         self.NumberChunksSpinBox.setDisabled(True)
         self.numChunks=1
+        self.MathDisplayArea.setRowCount(self.numChunks)
+
 
     def NumberChunksSpinBoxEnable(self):
         self.NumberChunksSpinBox.setDisabled(False)
 
     def SetNumChunks(self,val):
         self.numChunks=val
+        self.MathDisplayArea.setRowCount(self.numChunks)
         print("num Chunks   ")
         print(self.numChunks)
 
@@ -591,17 +594,25 @@ class Ui_MainWindow(object):
             if type =="Inter":
                 self.yAxisInterpolationRadioBtn.setDisabled(True)
                 self.yAxisNumChunksRadioBtn.setDisabled(False)
+                self.ErrorMapXaxis="Inter"
+                self.ErrorMapYaxis="Chunks"
             else:
                 self.yAxisNumChunksRadioBtn.setDisabled(True)
                 self.yAxisInterpolationRadioBtn.setDisabled(False)
+                self.ErrorMapXaxis="Chunks"
+                self.ErrorMapYaxis="Inter"
         else:
             if type =="Inter":
                 self.xAxisInterpolationRadioBtn.setDisabled(True)
                 self.xAxisNumChunksRadioBtn.setDisabled(False)
+                self.ErrorMapXaxis="Chunks"
+                self.ErrorMapYaxis="Inter"
 
             else:
                 self.xAxisNumChunksRadioBtn.setDisabled(True)
                 self.xAxisInterpolationRadioBtn.setDisabled(False)
+                self.ErrorMapYaxis="Chunks"
+                self.ErrorMapXaxis="Inter"
 
 
 if __name__ == "__main__":
