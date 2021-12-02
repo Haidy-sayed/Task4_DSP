@@ -615,23 +615,32 @@ class Ui_MainWindow(object):
                 self.yAxisNumChunksRadioBtn.setDisabled(False)
                 self.ErrorMapXaxis="Inter"
                 self.ErrorMapYaxis="Chunks"
+                self.ErrorMappingGraph.setRowCount(self.InterPolationOrderSlider.value())
+                self.ErrorMappingGraph.setColumnCount(self.numChunks)
             else:
                 self.yAxisNumChunksRadioBtn.setDisabled(True)
                 self.yAxisInterpolationRadioBtn.setDisabled(False)
                 self.ErrorMapXaxis="Chunks"
                 self.ErrorMapYaxis="Inter"
+                self.ErrorMappingGraph.setRowCount(self.numChunks)
+                self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
         else:
             if type =="Inter":
                 self.xAxisInterpolationRadioBtn.setDisabled(True)
                 self.xAxisNumChunksRadioBtn.setDisabled(False)
                 self.ErrorMapXaxis="Chunks"
                 self.ErrorMapYaxis="Inter"
+                self.ErrorMappingGraph.setRowCount(self.InterPolationOrderSlider.value())
+                self.ErrorMappingGraph.setColumnCount(self.numChunks)
 
             else:
                 self.xAxisNumChunksRadioBtn.setDisabled(True)
                 self.xAxisInterpolationRadioBtn.setDisabled(False)
                 self.ErrorMapYaxis="Chunks"
                 self.ErrorMapXaxis="Inter"
+                self.ErrorMappingGraph.setRowCount(self.numChunks)
+                self.ErrorMappingGraph.setColumnCount(self.InterpolationOrder)
+        
 
     def ChunkNumberComboBoxEdit(self):
         self.ChooseChunkComboBox.clear()
