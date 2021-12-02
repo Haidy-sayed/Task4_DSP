@@ -586,6 +586,7 @@ class Ui_MainWindow(object):
     def SetNumChunks(self,val):
         self.numChunks=val
         self.MathDisplayArea.setRowCount(self.numChunks)
+        self.ChunkNumberComboBoxEdit()
         print("num Chunks   ")
         print(self.numChunks)
 
@@ -613,6 +614,13 @@ class Ui_MainWindow(object):
                 self.xAxisInterpolationRadioBtn.setDisabled(False)
                 self.ErrorMapYaxis="Chunks"
                 self.ErrorMapXaxis="Inter"
+
+    def ChunkNumberComboBoxEdit(self):
+        self.ChooseChunkComboBox.clear()
+        self.ChunkNumberComboBox.clear()
+        for i in np.arange(1,self.numChunks+1):
+            self.ChunkNumberComboBox.addItem(str("Chunk # " +str(i)))
+            self.ChooseChunkComboBox.addItem(str("Chunk # " +str(i)))
 
 
 if __name__ == "__main__":
