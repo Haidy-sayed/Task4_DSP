@@ -391,9 +391,11 @@ class Ui_MainWindow(object):
         self.CurveFittingLabel.setFont(font)
         self.CurveFittingLabel.setObjectName("CurveFittingLabel")
         self.verticalLayout.addWidget(self.CurveFittingLabel)
-        self.CurveFittingGraph = PlotWidget(self.GraphingContainer)
+        
+        self.CurveFittingGraph =  pyqtgraph.GraphicsLayoutWidget(self.GraphingContainer)
         self.CurveFittingGraph.setObjectName("CurveFittingGraph")
         self.verticalLayout.addWidget(self.CurveFittingGraph)
+        
         self.line_3 = QtWidgets.QFrame(self.GraphingContainer)
         self.line_3.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
@@ -528,12 +530,12 @@ class Ui_MainWindow(object):
         self.InterPolationOrderSlider.valueChanged.connect(lambda: self.InterpolationOrdersetting(self.InterPolationOrderSlider.value()) )
         self.InterPolationOrderSlider.valueChanged.connect(lambda : self.polyInterpolate())
         self.ExtrapolationEfficiencySlider.valueChanged.connect(lambda: self.ExtrapolationCoefEdit(self.ExtrapolationEfficiencySlider.value()))
-
         self.LinearInterpRadioBtn.toggled.connect(lambda: self.linearInterpolate())
         self.PolynomialInterpRadioBtn.toggled.connect(lambda : self.polyInterpolate())
         self.ChooseChunkComboBox.currentTextChanged.connect(lambda : self.setChunkOrder())
         self.ErrorMappingButton.clicked.connect(lambda: self.errorMappingClicked())
         
+
         #golbal varaibles of constants declaration
         self.feature=0
         self.target=0
@@ -558,8 +560,10 @@ class Ui_MainWindow(object):
         self.lcdOrder.setStyleSheet('background-color:black')
         #setting extrapolation coeff to 100% by default
         self.ExtrapolationCoef=10
+        self.p=self.CurveFittingGraph.addPlot()   
+        self.original_curve = self.p.plot()
+        self.interpolated_curve = self.p.plot()
 
-        
 
         #Functions declarations
     def openFile(self):
@@ -580,9 +584,9 @@ class Ui_MainWindow(object):
         self.draw(self.feature,self.target)
 
     def settingCurveLimits(self):
-        self.CurveFittingGraph.setLimits(xMin=self.signalXMin)
-        self.CurveFittingGraph.setLimits(yMin=self.signalYMin)
-        self.CurveFittingGraph.setLimits(yMax=self.signalYMax)
+        self.p.setLimits(xMin=self.signalXMin)
+        self.p.setLimits(yMin=self.signalYMin)
+        self.p.setLimits(yMax=self.signalYMax)
 
     def setChunkOrder(self):
         self.Chunkorder= self.ChooseChunkComboBox.currentIndex()+1
@@ -591,11 +595,15 @@ class Ui_MainWindow(object):
     def draw(self,time,amp):
         """sets up our canvas to plot"""
         self.index=0  
-        self.CurveFittingGraph.plot(self.feature[0:self.index+1000], self.target[0:self.index+1000], pen="#683b94")
-        self.InterpolationOrdersetting(self.InterpolationOrder)
-        self.ChunkNumberComboBox()
-        self.ChooseChunkComboBox()
+        #self.CurveFittingGraph.plot(self.feature[0:self.index+1000], self.target[0:self.index+1000], pen="#683b94")
+        self.original_curve.setData(self.feature[0:self.index+1000], self.target[0:self.index+1000], pen="#683b94")
 
+        try:
+           self.InterpolationOrdersetting()
+           self.ChunkNumberComboBox()
+           self.ChooseChunkComboBox()
+        except:
+            pass
     def zoomIn(self, val):
         self.CurveFittingGraph.getViewBox().scaleBy((0.5,0.5))
         
@@ -691,26 +699,26 @@ class Ui_MainWindow(object):
             self.polyVectors=coeff
             print(self.polyVectors)
             polynomial= np.poly1d(coeff)
-            self.CurveFittingGraph.plot(self.feature[0:999],polynomial(self.feature[0:999]), pen=None , symbol = '+')
+            self.interpolated_curve.setData(self.feature[0:1000],polynomial(self.feature[0:1000]), pen=None , symbol = '+')
         else:
             coeff=np.polyfit(self.feature[(self.Chunkorder-1)*1000/self.numChunks : (self.Chunkorder*(1000/self.numChunks))-1 ] , self.target ,kind = 'linear')
             self.polyVectors = coeff
             print(self.polyVectors)
             polynomial= np.poly1d(coeff)
-            self.CurveFittingGraph.plot(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
+            self.interpolated_curve.setData(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
     def polyInterpolate(self):
         if self.numChunks==1:
             coeff=np.polyfit(self.feature , self.target ,deg =self.InterpolationOrder)
             self.polyVectors = coeff
             print(self.polyVectors)
             polynomial= np.poly1d(coeff)
-            self.CurveFittingGraph.plot(self.feature[0:self.index+1000],polynomial(self.feature[0:self.index+1000]), pen=None ,symbol='+')
+            self.interpolated_curve.setData(self.feature[0:self.index+1000],polynomial(self.feature[0:self.index+1000]), pen=None ,symbol='+')
         else:
            coeff=np.polyfit(self.feature[(self.Chunkorder-1)*1000/self.numChunks : (self.Chunkorder*(1000/self.numChunks))-1 ] , self.target ,deg = self.InterpolationOrder)
            self.polyVectors = coeff
            print(self.polyVectors)
            polynomial= np.poly1d(coeff) 
-           self.CurveFittingGraph.plot(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
+           self.interpolated_curve.setData(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
 
 
     
