@@ -527,6 +527,8 @@ class Ui_MainWindow(object):
         self.actionExit.triggered.connect(lambda: self.exit())
         self.InterPolationOrderSlider.valueChanged.connect(lambda: self.InterpolationOrdersetting(self.InterPolationOrderSlider.value()))
         self.ExtrapolationEfficiencySlider.valueChanged.connect(lambda: self.ExtrapolationCoefEdit(self.ExtrapolationEfficiencySlider.value()))
+        self.ErrorMappingButton.clicked.connect(lambda: self.errorMappingClicked())
+        
 
         #golbal varaibles of constants declaration
         self.feature=0
@@ -539,6 +541,7 @@ class Ui_MainWindow(object):
         self.numChunks=0
         self.axis=""
         self.type=""
+        self.errorMappingClickedTime=0
         #setting order default to 1
         self.InterpolationOrder=self.InterPolationOrderSlider.value()
         self.lcdOrder.display(self.InterpolationOrder)
@@ -590,6 +593,14 @@ class Ui_MainWindow(object):
     
     def zoomOut(self):
         self.CurveFittingGraph.getViewBox().scaleBy((2,2))
+
+    def errorMappingClicked(self):
+        self.errorMappingClickedTime=self.errorMappingClickedTime+1
+        if self.errorMappingClickedTime % 2 != 0:
+            self.ErrorMappingButton.setText("Stop EM")
+        elif self.errorMappingClickedTime %2 ==0:
+            self.ErrorMappingButton.setText("Run EM")
+
 
     def NumberChunksSpinBoxDisable(self):
         self.NumberChunksSpinBox.setDisabled(True)
