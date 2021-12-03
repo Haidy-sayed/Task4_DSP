@@ -513,10 +513,10 @@ class Ui_MainWindow(object):
 
         #buttons connections 
         self.actionOpen_File.triggered.connect(lambda: self.openFile())
-        self.actionCurveZoom_in.triggered.connect(lambda: self.zoomIn())
-        self.actionErrorZoom_in_2.triggered.connect(lambda: self.zoomIn())
-        self.actioncurveZoom_out.triggered.connect(lambda: self.zoomOut())
-        self.actionErrorZoom_out_2.triggered.connect(lambda: self.zoomOut())
+        self.actionCurveZoom_in.triggered.connect(lambda: self.zoomIn(0))
+        self.actionErrorZoom_in_2.triggered.connect(lambda: self.zoomIn(1))
+        self.actioncurveZoom_out.triggered.connect(lambda: self.zoomOut(0))
+        self.actionErrorZoom_out_2.triggered.connect(lambda: self.zoomOut(1))
         self.OneChunkRadioButton.toggled.connect(lambda: self.NumberChunksSpinBoxDisable())
         self.MultipleChunksRadioButton.toggled.connect(lambda: self.NumberChunksSpinBoxEnable())
         self.NumberChunksSpinBox.valueChanged.connect(lambda: self.SetNumChunks(self.NumberChunksSpinBox.value()))
@@ -525,10 +525,17 @@ class Ui_MainWindow(object):
         self.yAxisInterpolationRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Inter"))
         self.yAxisNumChunksRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Chunks"))
         self.actionExit.triggered.connect(lambda: self.exit())
-        self.InterPolationOrderSlider.valueChanged.connect(lambda: self.InterpolationOrdersetting(self.InterPolationOrderSlider.value()))
+        self.InterPolationOrderSlider.valueChanged.connect(lambda: self.InterpolationOrdersetting(self.InterPolationOrderSlider.value()) )
+        self.InterPolationOrderSlider.valueChanged.connect(lambda : self.polyInterpolate())
         self.ExtrapolationEfficiencySlider.valueChanged.connect(lambda: self.ExtrapolationCoefEdit(self.ExtrapolationEfficiencySlider.value()))
+<<<<<<< HEAD
+        self.LinearInterpRadioBtn.toggled.connect(lambda: self.linearInterpolate())
+        self.PolynomialInterpRadioBtn.toggled.connect(lambda : self.polyInterpolate())
+        self.ChooseChunkComboBox.currentTextChanged.connect(lambda : self.setChunkOrder())
+=======
         self.ErrorMappingButton.clicked.connect(lambda: self.errorMappingClicked())
         
+>>>>>>> cc0021518d53eb664110889874260453ab62e33d
 
         #golbal varaibles of constants declaration
         self.feature=0
@@ -538,7 +545,9 @@ class Ui_MainWindow(object):
         self.signalYMax=0
         self.signalXmin=0
         self.signalXmax=0
-        self.numChunks=0
+        self.numChunks=1       
+        self.Chunkorder=0
+        self.polyVectors = np.array([])
         self.axis=""
         self.type=""
         self.errorMappingClickedTime=0
@@ -574,10 +583,13 @@ class Ui_MainWindow(object):
         self.draw(self.feature,self.target)
 
     def settingCurveLimits(self):
-        self.CurveFittingGraph.setLimits(xMin=self.signalXMin*1.2)
-        self.CurveFittingGraph.setLimits(yMin=self.signalYMin*1.2)
-        self.CurveFittingGraph.setLimits(yMax=self.signalYMax*1.2)
-        self.CurveFittingGraph.setLimits(xMax=self.signalXMax*1.2)
+        self.CurveFittingGraph.setLimits(xMin=self.signalXMin)
+        self.CurveFittingGraph.setLimits(yMin=self.signalYMin)
+        self.CurveFittingGraph.setLimits(yMax=self.signalYMax)
+
+    def setChunkOrder(self):
+        self.Chunkorder= self.ChooseChunkComboBox.currentIndex()+1
+        print(self.Chunkorder)
 
     def draw(self,time,amp):
         """sets up our canvas to plot"""
@@ -587,11 +599,11 @@ class Ui_MainWindow(object):
         self.ChunkNumberComboBox()
         self.ChooseChunkComboBox()
 
-    def zoomIn(self):
+    def zoomIn(self, val):
         self.CurveFittingGraph.getViewBox().scaleBy((0.5,0.5))
         
     
-    def zoomOut(self):
+    def zoomOut(self,val):
         self.CurveFittingGraph.getViewBox().scaleBy((2,2))
 
     def errorMappingClicked(self):
@@ -676,6 +688,32 @@ class Ui_MainWindow(object):
 
         self.ErrorOptionsEnabling(self.axis,self.type)
 
+    def linearInterpolate(self):
+        if self.numChunks==1:
+            coeff=np.polyfit(self.feature , self.target ,deg =1)
+            self.polyVectors=coeff
+            print(self.polyVectors)
+            polynomial= np.poly1d(coeff)
+            self.CurveFittingGraph.plot(self.feature[0:1000],polynomial(self.feature[0:1000]), pen=None , symbol = '+')
+        else:
+            coeff=np.polyfit(self.feature[(self.Chunkorder-1)*1000/self.numChunks : (self.Chunkorder*(1000/self.numChunks))-1 ] , self.target ,kind = 'linear')
+            self.polyVectors = coeff
+            print(self.polyVectors)
+            polynomial= np.poly1d(coeff)
+            self.CurveFittingGraph.plot(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
+    def polyInterpolate(self):
+        if self.numChunks==1:
+            coeff=np.polyfit(self.feature , self.target ,deg =self.InterpolationOrder)
+            self.polyVectors = coeff
+            print(self.polyVectors)
+            polynomial= np.poly1d(coeff)
+            self.CurveFittingGraph.plot(self.feature[0:self.index+1000],polynomial(self.feature[0:self.index+1000]), pen=None ,symbol='+')
+        else:
+           coeff=np.polyfit(self.feature[(self.Chunkorder-1)*1000/self.numChunks : (self.Chunkorder*(1000/self.numChunks))-1 ] , self.target ,deg = self.InterpolationOrder)
+           self.polyVectors = coeff
+           print(self.polyVectors)
+           polynomial= np.poly1d(coeff) 
+           self.CurveFittingGraph.plot(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
 
 
     
