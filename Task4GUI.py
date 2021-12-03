@@ -513,10 +513,10 @@ class Ui_MainWindow(object):
 
         #buttons connections 
         self.actionOpen_File.triggered.connect(lambda: self.openFile())
-        self.actionCurveZoom_in.triggered.connect(lambda: self.zoomIn(0))
-        self.actionErrorZoom_in_2.triggered.connect(lambda: self.zoomIn(1))
-        self.actioncurveZoom_out.triggered.connect(lambda: self.zoomOut(0))
-        self.actionErrorZoom_out_2.triggered.connect(lambda: self.zoomOut(1))
+        self.actionCurveZoom_in.triggered.connect(lambda: self.zoomIn())
+        self.actionErrorZoom_in_2.triggered.connect(lambda: self.zoomIn())
+        self.actioncurveZoom_out.triggered.connect(lambda: self.zoomOut())
+        self.actionErrorZoom_out_2.triggered.connect(lambda: self.zoomOut())
         self.OneChunkRadioButton.toggled.connect(lambda: self.NumberChunksSpinBoxDisable())
         self.MultipleChunksRadioButton.toggled.connect(lambda: self.NumberChunksSpinBoxEnable())
         self.NumberChunksSpinBox.valueChanged.connect(lambda: self.SetNumChunks(self.NumberChunksSpinBox.value()))
@@ -571,9 +571,10 @@ class Ui_MainWindow(object):
         self.draw(self.feature,self.target)
 
     def settingCurveLimits(self):
-        self.CurveFittingGraph.setLimits(xMin=self.signalXMin)
-        self.CurveFittingGraph.setLimits(yMin=self.signalYMin)
-        self.CurveFittingGraph.setLimits(yMax=self.signalYMax)
+        self.CurveFittingGraph.setLimits(xMin=self.signalXMin*1.2)
+        self.CurveFittingGraph.setLimits(yMin=self.signalYMin*1.2)
+        self.CurveFittingGraph.setLimits(yMax=self.signalYMax*1.2)
+        self.CurveFittingGraph.setLimits(xMax=self.signalXMax*1.2)
 
     def draw(self,time,amp):
         """sets up our canvas to plot"""
@@ -583,11 +584,11 @@ class Ui_MainWindow(object):
         self.ChunkNumberComboBox()
         self.ChooseChunkComboBox()
 
-    def zoomIn(self, val):
+    def zoomIn(self):
         self.CurveFittingGraph.getViewBox().scaleBy((0.5,0.5))
         
     
-    def zoomOut(self,val):
+    def zoomOut(self):
         self.CurveFittingGraph.getViewBox().scaleBy((2,2))
 
     def NumberChunksSpinBoxDisable(self):
