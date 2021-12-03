@@ -528,15 +528,12 @@ class Ui_MainWindow(object):
         self.InterPolationOrderSlider.valueChanged.connect(lambda: self.InterpolationOrdersetting(self.InterPolationOrderSlider.value()) )
         self.InterPolationOrderSlider.valueChanged.connect(lambda : self.polyInterpolate())
         self.ExtrapolationEfficiencySlider.valueChanged.connect(lambda: self.ExtrapolationCoefEdit(self.ExtrapolationEfficiencySlider.value()))
-<<<<<<< HEAD
+
         self.LinearInterpRadioBtn.toggled.connect(lambda: self.linearInterpolate())
         self.PolynomialInterpRadioBtn.toggled.connect(lambda : self.polyInterpolate())
         self.ChooseChunkComboBox.currentTextChanged.connect(lambda : self.setChunkOrder())
-=======
         self.ErrorMappingButton.clicked.connect(lambda: self.errorMappingClicked())
         
->>>>>>> cc0021518d53eb664110889874260453ab62e33d
-
         #golbal varaibles of constants declaration
         self.feature=0
         self.target=0
@@ -595,7 +592,7 @@ class Ui_MainWindow(object):
         """sets up our canvas to plot"""
         self.index=0  
         self.CurveFittingGraph.plot(self.feature[0:self.index+1000], self.target[0:self.index+1000], pen="#683b94")
-        self.InterpolationOrdersetting()
+        self.InterpolationOrdersetting(self.InterpolationOrder)
         self.ChunkNumberComboBox()
         self.ChooseChunkComboBox()
 
@@ -694,7 +691,7 @@ class Ui_MainWindow(object):
             self.polyVectors=coeff
             print(self.polyVectors)
             polynomial= np.poly1d(coeff)
-            self.CurveFittingGraph.plot(self.feature[0:1000],polynomial(self.feature[0:1000]), pen=None , symbol = '+')
+            self.CurveFittingGraph.plot(self.feature[0:999],polynomial(self.feature[0:999]), pen=None , symbol = '+')
         else:
             coeff=np.polyfit(self.feature[(self.Chunkorder-1)*1000/self.numChunks : (self.Chunkorder*(1000/self.numChunks))-1 ] , self.target ,kind = 'linear')
             self.polyVectors = coeff

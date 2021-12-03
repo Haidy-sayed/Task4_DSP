@@ -489,7 +489,7 @@
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>200</y>
+            <y>180</y>
             <width>75</width>
             <height>23</height>
            </rect>
@@ -501,8 +501,8 @@
          <widget class="QProgressBar" name="ErrorMappingProgressBar">
           <property name="geometry">
            <rect>
-            <x>100</x>
-            <y>200</y>
+            <x>110</x>
+            <y>180</y>
             <width>171</width>
             <height>23</height>
            </rect>
@@ -518,6 +518,182 @@
           </property>
           <property name="invertedAppearance">
            <bool>false</bool>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_8">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>90</y>
+            <width>47</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Leelawadee</family>
+            <pointsize>9</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>X-axis</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_9">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>120</y>
+            <width>47</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Leelawadee</family>
+            <pointsize>9</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Y-axis</string>
+          </property>
+         </widget>
+         <widget class="QWidget" name="widget" native="true">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>80</y>
+            <width>221</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <widget class="QRadioButton" name="xAxisNumChunksRadioBtn">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>82</width>
+             <height>17</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Num Chunks</string>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="xAxisInterpolationRadioBtn">
+           <property name="geometry">
+            <rect>
+             <x>100</x>
+             <y>10</y>
+             <width>151</width>
+             <height>17</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Interpolation order</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="widget_2" native="true">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>110</y>
+            <width>221</width>
+            <height>31</height>
+           </rect>
+          </property>
+          <widget class="QRadioButton" name="yAxisNumChunksRadioBtn">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>82</width>
+             <height>17</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Num Chunks</string>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="yAxisInterpolationRadioBtn">
+           <property name="geometry">
+            <rect>
+             <x>100</x>
+             <y>10</y>
+             <width>151</width>
+             <height>17</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Interpolation order</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QLabel" name="label_10">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>91</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Leelawadee</family>
+            <pointsize>9</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Choose Chunk</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_11">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>50</y>
+            <width>91</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Leelawadee</family>
+            <pointsize>9</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Choose Order</string>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="ChooseChunkComboBox">
+          <property name="geometry">
+           <rect>
+            <x>140</x>
+            <y>10</y>
+            <width>131</width>
+            <height>22</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QComboBox" name="ChooseOrderComboBox">
+          <property name="geometry">
+           <rect>
+            <x>140</x>
+            <y>50</y>
+            <width>131</width>
+            <height>22</height>
+           </rect>
           </property>
          </widget>
         </widget>
@@ -638,16 +814,8 @@
      <addaction name="actionCurveZoom_in"/>
      <addaction name="actioncurveZoom_out"/>
     </widget>
-    <widget class="QMenu" name="menuError_Mapping">
-     <property name="title">
-      <string>Error Mapping</string>
-     </property>
-     <addaction name="actionErrorZoom_in_2"/>
-     <addaction name="actionErrorZoom_out_2"/>
-    </widget>
     <addaction name="menuCurve_Fitting"/>
     <addaction name="separator"/>
-    <addaction name="menuError_Mapping"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuGraphs_Options"/>
