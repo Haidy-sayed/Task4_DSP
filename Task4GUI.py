@@ -456,7 +456,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.toolBox.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -528,11 +527,10 @@ class Ui_MainWindow(object):
         self.actionExit.triggered.connect(lambda: self.exit())
         self.InterPolationOrderSlider.valueChanged.connect(lambda: self.InterpolationOrdersetting(self.InterPolationOrderSlider.value()))
         self.ExtrapolationEfficiencySlider.valueChanged.connect(lambda: self.ExtrapolationCoefEdit(self.ExtrapolationEfficiencySlider.value()))
-        self.ErrorMappingButton.clicked.connect(lambda: self.errorMappingClicked())
 
         #golbal varaibles of constants declaration
-        self.time1=0
-        self.amp1=0
+        self.feature=0
+        self.target=0
         self.ampArray=0
         self.signalYMin=0
         self.signalYMax=0
@@ -541,8 +539,6 @@ class Ui_MainWindow(object):
         self.numChunks=0
         self.axis=""
         self.type=""
-        self.errorMappingtime=0
-        
         #setting order default to 1
         self.InterpolationOrder=self.InterPolationOrderSlider.value()
         self.lcdOrder.display(self.InterpolationOrder)
@@ -558,22 +554,21 @@ class Ui_MainWindow(object):
 
         #Functions declarations
     def openFile(self):
-      file_path=QFileDialog.getOpenFileName()
-      self.file_name=file_path[0].split('/')[-1]
-      self.read_data(self.file_name)
+      self.file_path=QFileDialog.getOpenFileName()[0]
+      self.read_data(self.file_path)
 
     def read_data(self,file_name):
         """loads the data from chosen file"""
-        dataFile=pd.read_csv(file_name)
+        dataFile=pd.read_csv(r"{}".format(file_name))
         self.label1=file_name
-        self.time1=list(pd.to_numeric(dataFile['time'],downcast="float"))
-        self.amp1=list(pd.to_numeric(dataFile['amplitude'],downcast="float"))
-        self.signalYMin=min(self.amp1)
-        self.signalYMax=max(self.amp1)
-        self.signalXMin=min(self.time1)
-        self.signalXMax=max(self.time1)
+        self.feature=list(pd.to_numeric(dataFile.iloc[:,0],downcast="float"))
+        self.target=list(pd.to_numeric(dataFile.iloc[:,-1],downcast="float"))
+        self.signalYMin=min(self.target)
+        self.signalYMax=max(self.target)
+        self.signalXMin=min(self.feature)
+        self.signalXMax=max(self.feature)
         self.settingCurveLimits()
-        self.draw(self.time1,self.amp1)
+        self.draw(self.feature,self.target)
 
     def settingCurveLimits(self):
         self.CurveFittingGraph.setLimits(xMin=self.signalXMin)
@@ -582,9 +577,8 @@ class Ui_MainWindow(object):
 
     def draw(self,time,amp):
         """sets up our canvas to plot"""
-        self.amp1=amp
         self.index=0  
-        self.CurveFittingGraph.plot(self.time1[0:self.index+1000], self.amp1[0:self.index+1000], pen="#683b94")
+        self.CurveFittingGraph.plot(self.feature[0:self.index+1000], self.target[0:self.index+1000], pen="#683b94")
         self.InterpolationOrdersetting()
         self.ChunkNumberComboBox()
         self.ChooseChunkComboBox()
@@ -593,20 +587,8 @@ class Ui_MainWindow(object):
         self.CurveFittingGraph.getViewBox().scaleBy((0.5,0.5))
         
     
-    def zoomOut(self):
+    def zoomOut(self,val):
         self.CurveFittingGraph.getViewBox().scaleBy((2,2))
-    
-    def errorMappingClicked(self):
-        
-        self.errorMappingtime = self.errorMappingtime+1
-        print(self.errorMappingtime)
-        if self.errorMappingtime % 2 !=0:
-            self.ErrorMappingButton.setText("STOP EM")
-        elif self.errorMappingtime %2 ==0:
-            self.ErrorMappingButton.setText("RUN EM")
-
-
-        
 
     def NumberChunksSpinBoxDisable(self):
         self.NumberChunksSpinBox.setDisabled(True)
