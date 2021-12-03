@@ -456,6 +456,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.toolBox.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -527,6 +528,7 @@ class Ui_MainWindow(object):
         self.actionExit.triggered.connect(lambda: self.exit())
         self.InterPolationOrderSlider.valueChanged.connect(lambda: self.InterpolationOrdersetting(self.InterPolationOrderSlider.value()))
         self.ExtrapolationEfficiencySlider.valueChanged.connect(lambda: self.ExtrapolationCoefEdit(self.ExtrapolationEfficiencySlider.value()))
+        self.ErrorMappingButton.clicked.connect(lambda: self.errorMappingClicked())
 
         #golbal varaibles of constants declaration
         self.time1=0
@@ -539,6 +541,8 @@ class Ui_MainWindow(object):
         self.numChunks=0
         self.axis=""
         self.type=""
+        self.errorMappingtime=0
+        
         #setting order default to 1
         self.InterpolationOrder=self.InterPolationOrderSlider.value()
         self.lcdOrder.display(self.InterpolationOrder)
@@ -591,6 +595,18 @@ class Ui_MainWindow(object):
     
     def zoomOut(self):
         self.CurveFittingGraph.getViewBox().scaleBy((2,2))
+    
+    def errorMappingClicked(self):
+        
+        self.errorMappingtime = self.errorMappingtime+1
+        print(self.errorMappingtime)
+        if self.errorMappingtime % 2 !=0:
+            self.ErrorMappingButton.setText("STOP EM")
+        elif self.errorMappingtime %2 ==0:
+            self.ErrorMappingButton.setText("RUN EM")
+
+
+        
 
     def NumberChunksSpinBoxDisable(self):
         self.NumberChunksSpinBox.setDisabled(True)
