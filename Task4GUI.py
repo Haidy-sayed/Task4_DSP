@@ -392,7 +392,7 @@ class Ui_MainWindow(object):
         self.CurveFittingLabel.setObjectName("CurveFittingLabel")
         self.verticalLayout.addWidget(self.CurveFittingLabel)
         
-        self.CurveFittingGraph =  pyqtgraph.GraphicsLayoutWidget(self.GraphingContainer)
+        self.CurveFittingGraph = pyqtgraph.GraphicsLayoutWidget(self.GraphingContainer)
         self.CurveFittingGraph.setObjectName("CurveFittingGraph")
         self.verticalLayout.addWidget(self.CurveFittingGraph)
         
@@ -532,9 +532,7 @@ class Ui_MainWindow(object):
         self.ExtrapolationEfficiencySlider.valueChanged.connect(lambda: self.ExtrapolationCoefEdit(self.ExtrapolationEfficiencySlider.value()))
         self.LinearInterpRadioBtn.toggled.connect(lambda: self.linearInterpolate())
         self.PolynomialInterpRadioBtn.toggled.connect(lambda : self.polyInterpolate())
-        self.ChooseChunkComboBox.currentTextChanged.connect(lambda : self.setChunkOrder())
-        self.ErrorMappingButton.clicked.connect(lambda: self.errorMappingClicked())
-        
+        self.ChunkNumberComboBox.currentIndexChanged.connect(lambda : self.setChunkOrder())
 
         #golbal varaibles of constants declaration
         self.feature=0
@@ -563,7 +561,7 @@ class Ui_MainWindow(object):
         self.p=self.CurveFittingGraph.addPlot()   
         self.original_curve = self.p.plot()
         self.interpolated_curve = self.p.plot()
-
+        
 
         #Functions declarations
     def openFile(self):
@@ -589,21 +587,20 @@ class Ui_MainWindow(object):
         self.p.setLimits(yMax=self.signalYMax)
 
     def setChunkOrder(self):
-        self.Chunkorder= self.ChooseChunkComboBox.currentIndex()+1
-        print(self.Chunkorder)
+        self.Chunkorder= int(self.ChunkNumberComboBox.currentIndex())+1
+     #   print(self.Chunkorder)
 
     def draw(self,time,amp):
         """sets up our canvas to plot"""
         self.index=0  
-        #self.CurveFittingGraph.plot(self.feature[0:self.index+1000], self.target[0:self.index+1000], pen="#683b94")
         self.original_curve.setData(self.feature[0:self.index+1000], self.target[0:self.index+1000], pen="#683b94")
-
         try:
-           self.InterpolationOrdersetting()
-           self.ChunkNumberComboBox()
-           self.ChooseChunkComboBox()
+          self.InterpolationOrdersetting()
+          self.ChunkNumberComboBox()
+          self.ChooseChunkComboBox()
         except:
             pass
+        
     def zoomIn(self, val):
         self.CurveFittingGraph.getViewBox().scaleBy((0.5,0.5))
         
@@ -635,8 +632,8 @@ class Ui_MainWindow(object):
         self.MathDisplayArea.setRowCount(self.numChunks)
         self.ChunkNumberComboBoxEdit()
         self.ErrorOptionsEnabling(self.axis,self.type)
-        print("num Chunks   ")
-        print(self.numChunks)
+      #  print("num Chunks   ")
+       # print(self.numChunks)
 
     def ErrorOptionsEnabling(self, axis, type):
         self.axis=axis
@@ -697,28 +694,32 @@ class Ui_MainWindow(object):
         if self.numChunks==1:
             coeff=np.polyfit(self.feature , self.target ,deg =1)
             self.polyVectors=coeff
-            print(self.polyVectors)
+            #print(self.polyVectors)
             polynomial= np.poly1d(coeff)
-            self.interpolated_curve.setData(self.feature[0:1000],polynomial(self.feature[0:1000]), pen=None , symbol = '+')
+            self.interpolated_curve.setData(self.feature[0:1000],polynomial(self.feature[0:1000]), pen=None , symbol = 'o')
         else:
-            coeff=np.polyfit(self.feature[(self.Chunkorder-1)*1000/self.numChunks : (self.Chunkorder*(1000/self.numChunks))-1 ] , self.target ,kind = 'linear')
+            coeff=np.polyfit(self.feature[(self.Chunkorder-1)*int(1000/self.numChunks) : (self.Chunkorder*int(1000/self.numChunks))-1 ] , self.target ,deg=1)
             self.polyVectors = coeff
-            print(self.polyVectors)
+            #print(self.polyVectors)
             polynomial= np.poly1d(coeff)
-            self.interpolated_curve.setData(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
+            self.inter_curve
+            self.interpolated_curve.setData(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='o')
     def polyInterpolate(self):
         if self.numChunks==1:
             coeff=np.polyfit(self.feature , self.target ,deg =self.InterpolationOrder)
             self.polyVectors = coeff
-            print(self.polyVectors)
+           # print(self.polyVectors)
             polynomial= np.poly1d(coeff)
-            self.interpolated_curve.setData(self.feature[0:self.index+1000],polynomial(self.feature[0:self.index+1000]), pen=None ,symbol='+')
+            self.interpolated_curve.setData(self.feature[0:self.index+1000],polynomial(self.feature[0:self.index+1000]), pen=None ,symbol='o')
         else:
-           coeff=np.polyfit(self.feature[(self.Chunkorder-1)*1000/self.numChunks : (self.Chunkorder*(1000/self.numChunks))-1 ] , self.target ,deg = self.InterpolationOrder)
+          # chunks_coeff=[]
+           coeff=np.polyfit(self.feature[(self.Chunkorder-1)*int(1000/self.numChunks) : (self.Chunkorder*int(1000/self.numChunks))-1 ] , self.target[(self.Chunkorder-1)*int(1000/self.numChunks) : (self.Chunkorder*int(1000/self.numChunks))-1] ,deg = self.InterpolationOrder)
+           
            self.polyVectors = coeff
-           print(self.polyVectors)
+          # print(self.polyVectors)
            polynomial= np.poly1d(coeff) 
-           self.interpolated_curve.setData(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
+         #  self.interpolated_curve.setData(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
+           self.interpolated_curve.setData(self.feature[(self.Chunkorder-1)*int(1000/self.numChunks):(self.Chunkorder-1)*int(1000/self.numChunks)+int(1000/self.numChunks)],polynomial(self.feature[(self.Chunkorder-1)*int(1000/self.numChunks):(self.Chunkorder-1)*int(1000/self.numChunks)+int(1000/self.numChunks)]), pen=None ,symbol='o')
 
 
     
