@@ -528,11 +528,12 @@ class Ui_MainWindow(object):
         self.yAxisNumChunksRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Chunks"))
         self.actionExit.triggered.connect(lambda: self.exit())
         self.InterPolationOrderSlider.valueChanged.connect(lambda: self.InterpolationOrdersetting(self.InterPolationOrderSlider.value()) )
-        self.InterPolationOrderSlider.valueChanged.connect(lambda : self.polyInterpolate())
+        #self.InterPolationOrderSlider.valueChanged.connect(lambda : self.interpolationPrep())
         self.ExtrapolationEfficiencySlider.valueChanged.connect(lambda: self.ExtrapolationCoefEdit(self.ExtrapolationEfficiencySlider.value()))
-        self.LinearInterpRadioBtn.toggled.connect(lambda: self.linearInterpolate())
-        self.PolynomialInterpRadioBtn.toggled.connect(lambda : self.polyInterpolate())
+        self.LinearInterpRadioBtn.toggled.connect(lambda: self.interpolationPrep(0))
+        self.PolynomialInterpRadioBtn.toggled.connect(lambda : self.interpolationPrep(1))
         self.ChunkNumberComboBox.currentIndexChanged.connect(lambda : self.setChunkOrder())
+        
 
         #golbal varaibles of constants declaration
         self.feature=0
@@ -551,13 +552,14 @@ class Ui_MainWindow(object):
         #setting order default to 1
         self.InterpolationOrder=self.InterPolationOrderSlider.value()
         self.lcdOrder.display(self.InterpolationOrder)
+        self.interpolationTypeFlag=-1
 
         #diasbling the num spinbox by default to avoid errors
         self.NumberChunksSpinBox.setDisabled(True)
         #changing LCD color
         self.lcdOrder.setStyleSheet('background-color:black')
         #setting extrapolation coeff to 100% by default
-        self.ExtrapolationCoef=10
+        self.ExtrapolationCoef=100
         self.p=self.CurveFittingGraph.addPlot()   
         self.original_curve = self.p.plot()
         self.interpolated_curve = self.p.plot()
@@ -588,6 +590,17 @@ class Ui_MainWindow(object):
 
     def setChunkOrder(self):
         self.Chunkorder= int(self.ChunkNumberComboBox.currentIndex())+1
+        if( self.PolynomialInterpRadioBtn.isChecked() or self.LinearInterpRadioBtn.isChecked):
+            if(self.interpolationTypeFlag ==0):
+                self.linearInterpolate()
+            elif(self.interpolationTypeFlag ==1):
+                self.polyInterpolate()
+            else:
+                print("Please choose an interpolation type from the radio buttons")
+        else:
+            pass
+        
+
      #   print(self.Chunkorder)
 
     def draw(self,time,amp):
@@ -690,42 +703,65 @@ class Ui_MainWindow(object):
 
         self.ErrorOptionsEnabling(self.axis,self.type)
 
+    
+    def interpolationPrep(self, val):
+        if val == 0:
+            self.interpolationTypeFlag =0
+            self.linearInterpolate()
+        elif val ==1:
+            self.interpolationTypeFlag =1
+            self.polyInterpolate()
+        else:
+            print("Choose an intrpolation type from the radio buttons")
+
     def linearInterpolate(self):
-        if self.numChunks==1:
-            coeff=np.polyfit(self.feature , self.target ,deg =1)
-            self.polyVectors=coeff
-            #print(self.polyVectors)
-            polynomial= np.poly1d(coeff)
-            self.interpolated_curve.setData(self.feature[0:1000],polynomial(self.feature[0:1000]), pen=None , symbol = 'o')
+        if self.ExtrapolationCoef ==0:
+            print("Please check the extrapolation slider as there mush be an error in its code lines")
         else:
-            coeff=np.polyfit(self.feature[(self.Chunkorder-1)*int(1000/self.numChunks) : (self.Chunkorder*int(1000/self.numChunks))-1 ] , self.target ,deg=1)
-            self.polyVectors = coeff
-            #print(self.polyVectors)
-            polynomial= np.poly1d(coeff)
-            self.inter_curve
-            self.interpolated_curve.setData(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='o')
+            maxLength=int(self.ExtrapolationCoef* 1000 *0.01)
+            print(maxLength)
+            if self.numChunks==1:
+                coeff=np.polyfit(self.feature , self.target ,deg =1)
+                self.polyVectors=coeff
+                #print(self.polyVectors)
+                polynomial= np.poly1d(coeff)
+                self.interpolated_curve.setData(self.feature[0:maxLength-1],polynomial(self.feature[0:maxLength-1]), pen=None , symbol = '+')
+            else:
+                coeff=np.polyfit(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks) : (self.Chunkorder*int(maxLength/self.numChunks))-1 ] , self.target[(self.Chunkorder-1)*int(maxLength/self.numChunks) : (self.Chunkorder*int(maxLength/self.numChunks))-1]  ,deg=1)
+                self.polyVectors = coeff
+                #print(self.polyVectors)
+                polynomial= np.poly1d(coeff)
+                self.interpolated_curve.setData(self.feature[0:self.index+int(maxLength/self.numChunks)],polynomial(self.feature[0:self.index+int(maxLength/self.numChunks)]), pen=None ,symbol='+')
     def polyInterpolate(self):
-        if self.numChunks==1:
-            coeff=np.polyfit(self.feature , self.target ,deg =self.InterpolationOrder)
-            self.polyVectors = coeff
-           # print(self.polyVectors)
-            polynomial= np.poly1d(coeff)
-            self.interpolated_curve.setData(self.feature[0:self.index+1000],polynomial(self.feature[0:self.index+1000]), pen=None ,symbol='o')
+        if self.ExtrapolationCoef ==0:
+            print("Please check the extrapolation slider as there mush be an error in its code lines")
         else:
-          # chunks_coeff=[]
-           coeff=np.polyfit(self.feature[(self.Chunkorder-1)*int(1000/self.numChunks) : (self.Chunkorder*int(1000/self.numChunks))-1 ] , self.target[(self.Chunkorder-1)*int(1000/self.numChunks) : (self.Chunkorder*int(1000/self.numChunks))-1] ,deg = self.InterpolationOrder)
-           
-           self.polyVectors = coeff
-          # print(self.polyVectors)
-           polynomial= np.poly1d(coeff) 
-         #  self.interpolated_curve.setData(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
-           self.interpolated_curve.setData(self.feature[(self.Chunkorder-1)*int(1000/self.numChunks):(self.Chunkorder-1)*int(1000/self.numChunks)+int(1000/self.numChunks)],polynomial(self.feature[(self.Chunkorder-1)*int(1000/self.numChunks):(self.Chunkorder-1)*int(1000/self.numChunks)+int(1000/self.numChunks)]), pen=None ,symbol='o')
+            maxLength=int(self.ExtrapolationCoef* 1000 *0.01)
+            if self.numChunks==1:
+                coeff=np.polyfit(self.feature , self.target ,deg =self.InterpolationOrder)
+                self.polyVectors = coeff
+            # print(self.polyVectors)
+                polynomial= np.poly1d(coeff)
+                self.interpolated_curve.setData(self.feature[0:self.index+maxLength],polynomial(self.feature[0:self.index+maxLength]), pen=None ,symbol='o')
+            else:
+                # chunks_coeff=[]
+                coeff=np.polyfit(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks) : (self.Chunkorder*int(maxLength/self.numChunks))-1 ] , self.target[(self.Chunkorder-1)*int(maxLength/self.numChunks) : (self.Chunkorder*int(maxLength/self.numChunks))-1] ,deg = self.InterpolationOrder)
+                
+                self.polyVectors = coeff
+                # print(self.polyVectors)
+                polynomial= np.poly1d(coeff) 
+                #  self.interpolated_curve.setData(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
+                self.interpolated_curve.setData(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks):(self.Chunkorder-1)*int(maxLength/self.numChunks)+int(maxLength/self.numChunks)],polynomial(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks):(self.Chunkorder-1)*int(maxLength/self.numChunks)+int(maxLength/self.numChunks)]), pen=None ,symbol='o')
 
 
     
     def InterpolationOrdersetting(self, val):
         self.InterpolationOrder=val
         self.ChooseOrderComboBoxEdit()
+        if self.interpolationTypeFlag ==1:
+            self.polyInterpolate()
+        else:
+            self.interpolationPrep(0)
         #if val==0:
          #   self.xAxisInterpolationRadioBtn.setChecked(False)
           #  self.xAxisNumChunksRadioBtn.setChecked(False)
@@ -734,6 +770,8 @@ class Ui_MainWindow(object):
     
     def ExtrapolationCoefEdit(self, val):
         self.ExtrapolationCoef=val*10
+        print(self.ExtrapolationCoef)
+        self.interpolationPrep(self.interpolationTypeFlag)
         
     def exit(self):
         sys.exit()
