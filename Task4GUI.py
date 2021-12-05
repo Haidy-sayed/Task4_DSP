@@ -731,7 +731,7 @@ class Ui_MainWindow(object):
                 self.polyVectors = coeff
                 #print(self.polyVectors)
                 polynomial= np.poly1d(coeff)
-                self.interpolated_curve.setData(self.feature[0:self.index+int(maxLength/self.numChunks)],polynomial(self.feature[0:self.index+int(maxLength/self.numChunks)]), pen=None ,symbol='+')
+                self.interpolated_curve.setData(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks):(self.Chunkorder-1)*int(maxLength/self.numChunks)+int(maxLength/self.numChunks)],polynomial(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks):(self.Chunkorder-1)*int(maxLength/self.numChunks)+int(maxLength/self.numChunks)]), pen=None ,symbol='+')
     def polyInterpolate(self):
         if self.ExtrapolationCoef ==0:
             print("Please check the extrapolation slider as there mush be an error in its code lines")
