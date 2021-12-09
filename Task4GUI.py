@@ -10,6 +10,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import numpy as np
+
 from playsound import playsound
 from PyQt5 import QtCore, QtGui, QtWidgets
 import matplotlib.pyplot as plt
@@ -80,7 +81,7 @@ pg.setConfigOption('background', 'w')
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(800, 600)
+        MainWindow.resize(1033, 685)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -249,12 +250,7 @@ class Ui_MainWindow(object):
         self.PolynomialInterpRadioBtn = QtWidgets.QRadioButton(self.widget2)
         self.PolynomialInterpRadioBtn.setObjectName("PolynomialInterpRadioBtn")
         self.verticalLayout_4.addWidget(self.PolynomialInterpRadioBtn)
-        self.SplineInterpRadioBtn = QtWidgets.QRadioButton(self.widget2)
-        self.SplineInterpRadioBtn.setObjectName("SplineInterpRadioBtn")
-        self.verticalLayout_4.addWidget(self.SplineInterpRadioBtn)
-        self.PieceWiseRadioBtn = QtWidgets.QRadioButton(self.widget2)
-        self.PieceWiseRadioBtn.setObjectName("PieceWiseRadioBtn")
-        self.verticalLayout_4.addWidget(self.PieceWiseRadioBtn)
+        
         self.toolBox.addItem(self.page_2, "")
         self.verticalLayout_2.addWidget(self.toolBox)
         self.horizontalLayout.addWidget(self.FittingOptionsContianer)
@@ -295,17 +291,17 @@ class Ui_MainWindow(object):
         self.widget_3 = QtWidgets.QWidget(self.DataContainer)
         self.widget_3.setObjectName("widget_3")
         self.ErrorMappingButton = QtWidgets.QPushButton(self.widget_3)
-        self.ErrorMappingButton.setGeometry(QtCore.QRect(10, 180, 75, 23))
+        self.ErrorMappingButton.setGeometry(QtCore.QRect(10, 240, 75, 23))
         self.ErrorMappingButton.setObjectName("ErrorMappingButton")
         self.ErrorMappingProgressBar = QtWidgets.QProgressBar(self.widget_3)
-        self.ErrorMappingProgressBar.setGeometry(QtCore.QRect(110, 180, 171, 23))
+        self.ErrorMappingProgressBar.setGeometry(QtCore.QRect(110, 240, 171, 23))
         self.ErrorMappingProgressBar.setProperty("value", 0)
         self.ErrorMappingProgressBar.setTextVisible(True)
         self.ErrorMappingProgressBar.setOrientation(QtCore.Qt.Horizontal)
         self.ErrorMappingProgressBar.setInvertedAppearance(False)
         self.ErrorMappingProgressBar.setObjectName("ErrorMappingProgressBar")
         self.label_8 = QtWidgets.QLabel(self.widget_3)
-        self.label_8.setGeometry(QtCore.QRect(10, 90, 47, 16))
+        self.label_8.setGeometry(QtCore.QRect(0, 90, 47, 16))
         font = QtGui.QFont()
         font.setFamily("Leelawadee")
         font.setPointSize(9)
@@ -314,7 +310,7 @@ class Ui_MainWindow(object):
         self.label_8.setFont(font)
         self.label_8.setObjectName("label_8")
         self.label_9 = QtWidgets.QLabel(self.widget_3)
-        self.label_9.setGeometry(QtCore.QRect(10, 120, 47, 16))
+        self.label_9.setGeometry(QtCore.QRect(0, 120, 47, 16))
         font = QtGui.QFont()
         font.setFamily("Leelawadee")
         font.setPointSize(9)
@@ -326,22 +322,22 @@ class Ui_MainWindow(object):
         self.widget3.setGeometry(QtCore.QRect(70, 80, 221, 31))
         self.widget3.setObjectName("widget3")
         self.xAxisNumChunksRadioBtn = QtWidgets.QRadioButton(self.widget3)
-        self.xAxisNumChunksRadioBtn.setGeometry(QtCore.QRect(10, 10, 82, 17))
+        self.xAxisNumChunksRadioBtn.setGeometry(QtCore.QRect(0, 10, 82, 17))
         self.xAxisNumChunksRadioBtn.setObjectName("xAxisNumChunksRadioBtn")
         self.xAxisInterpolationRadioBtn = QtWidgets.QRadioButton(self.widget3)
-        self.xAxisInterpolationRadioBtn.setGeometry(QtCore.QRect(100, 10, 151, 17))
+        self.xAxisInterpolationRadioBtn.setGeometry(QtCore.QRect(90, 10, 151, 17))
         self.xAxisInterpolationRadioBtn.setObjectName("xAxisInterpolationRadioBtn")
         self.widget_2 = QtWidgets.QWidget(self.widget_3)
         self.widget_2.setGeometry(QtCore.QRect(70, 110, 221, 31))
         self.widget_2.setObjectName("widget_2")
         self.yAxisNumChunksRadioBtn = QtWidgets.QRadioButton(self.widget_2)
-        self.yAxisNumChunksRadioBtn.setGeometry(QtCore.QRect(10, 10, 82, 17))
+        self.yAxisNumChunksRadioBtn.setGeometry(QtCore.QRect(0, 10, 82, 17))
         self.yAxisNumChunksRadioBtn.setObjectName("yAxisNumChunksRadioBtn")
         self.yAxisInterpolationRadioBtn = QtWidgets.QRadioButton(self.widget_2)
-        self.yAxisInterpolationRadioBtn.setGeometry(QtCore.QRect(100, 10, 151, 17))
+        self.yAxisInterpolationRadioBtn.setGeometry(QtCore.QRect(90, 10, 151, 17))
         self.yAxisInterpolationRadioBtn.setObjectName("yAxisInterpolationRadioBtn")
         self.label_10 = QtWidgets.QLabel(self.widget_3)
-        self.label_10.setGeometry(QtCore.QRect(10, 10, 91, 16))
+        self.label_10.setGeometry(QtCore.QRect(0, 0, 91, 16))
         font = QtGui.QFont()
         font.setFamily("Leelawadee")
         font.setPointSize(9)
@@ -350,7 +346,7 @@ class Ui_MainWindow(object):
         self.label_10.setFont(font)
         self.label_10.setObjectName("label_10")
         self.label_11 = QtWidgets.QLabel(self.widget_3)
-        self.label_11.setGeometry(QtCore.QRect(10, 50, 91, 16))
+        self.label_11.setGeometry(QtCore.QRect(0, 60, 91, 16))
         font = QtGui.QFont()
         font.setFamily("Leelawadee")
         font.setPointSize(9)
@@ -359,12 +355,31 @@ class Ui_MainWindow(object):
         self.label_11.setFont(font)
         self.label_11.setObjectName("label_11")
         self.ChooseChunkComboBox = QtWidgets.QComboBox(self.widget_3)
-        self.ChooseChunkComboBox.setGeometry(QtCore.QRect(140, 10, 131, 22))
+        self.ChooseChunkComboBox.setGeometry(QtCore.QRect(140, 0, 131, 22))
         self.ChooseChunkComboBox.setObjectName("ChooseChunkComboBox")
         self.ChooseOrderComboBox = QtWidgets.QComboBox(self.widget_3)
-        self.ChooseOrderComboBox.setGeometry(QtCore.QRect(140, 50, 131, 22))
+        self.ChooseOrderComboBox.setGeometry(QtCore.QRect(140, 60, 131, 22))
         self.ChooseOrderComboBox.setObjectName("ChooseOrderComboBox")
         self.ChooseOrderComboBox.setMaxCount(999)
+        self.ChooseOverLapComboBox = QComboBox(self.widget_3)
+        self.ChooseOverLapComboBox.setGeometry(QRect(140, 30, 131, 22))
+        self.ChooseOverLapComboBox.setObjectName("ChooseOverLapComboBox")
+        self.label_12 = QLabel(self.widget_3)
+        self.label_12.setObjectName(u"label_12")
+        self.label_12.setGeometry(QRect(0, 30, 131, 16))
+        font5 = QFont()
+        font5.setPointSize(9)
+        font5.setBold(True)
+        font5.setWeight(75)
+        self.label_12.setFont(font5)
+
+        self.xAxisOverLapRadioBtn = QRadioButton(self.widget_3)
+        self.xAxisOverLapRadioBtn.setObjectName("xAxisOverLapRadioBtn")
+        self.xAxisOverLapRadioBtn.setGeometry(QRect(300, 90, 121, 17))
+        self.yAxisOverLapRadioBtn = QRadioButton(self.widget_3)
+        self.yAxisOverLapRadioBtn.setObjectName("yAxisOverLapRadioBtn")
+        self.yAxisOverLapRadioBtn.setGeometry(QRect(300, 120, 121, 17))
+
         self.verticalLayout_5.addWidget(self.widget_3)
         self.horizontalLayout.addWidget(self.DataContainer)
         self.line = QtWidgets.QFrame(self.centralwidget)
@@ -478,8 +493,7 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Type of Interpolation"))
         self.LinearInterpRadioBtn.setText(_translate("MainWindow", "Linear"))
         self.PolynomialInterpRadioBtn.setText(_translate("MainWindow", "Polynomial"))
-        self.SplineInterpRadioBtn.setText(_translate("MainWindow", "Spline"))
-        self.PieceWiseRadioBtn.setText(_translate("MainWindow", "PieceWise"))
+        
         self.toolBox.setItemText(self.toolBox.indexOf(self.page_2), _translate("MainWindow", "Page 2"))
         self.MathematicsLabel.setText(_translate("MainWindow", "Mathematics"))
         self.ErrorMappingLabel_2.setText(_translate("MainWindow", "Error Mapping "))
@@ -490,8 +504,11 @@ class Ui_MainWindow(object):
         self.xAxisInterpolationRadioBtn.setText(_translate("MainWindow", "Interpolation order"))
         self.yAxisNumChunksRadioBtn.setText(_translate("MainWindow", "Num Chunks"))
         self.yAxisInterpolationRadioBtn.setText(_translate("MainWindow", "Interpolation order"))
+        self.xAxisOverLapRadioBtn.setText(QCoreApplication.translate("MainWindow", "OverLab"))
+        self.yAxisOverLapRadioBtn.setText(QCoreApplication.translate("MainWindow", "OverLab"))
         self.label_10.setText(_translate("MainWindow", "Choose Chunk"))
         self.label_11.setText(_translate("MainWindow", "Choose Order"))
+        self.label_12.setText(QCoreApplication.translate("MainWindow", "Choose OverLab"))
         self.CurveFittingLabel.setText(_translate("MainWindow", "Curve Fitting Area"))
         self.ErrorMappingLabel.setText(_translate("MainWindow", "Error Mapping Area"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
@@ -526,6 +543,9 @@ class Ui_MainWindow(object):
         self.xAxisNumChunksRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("X","Chunks"))
         self.yAxisInterpolationRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Inter"))
         self.yAxisNumChunksRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Chunks"))
+        self.xAxisOverLapRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("X","Over"))
+        self.yAxisOverLapRadioBtn.toggled.connect(lambda: self.ErrorOptionsEnabling("Y","Over"))
+        
         self.actionExit.triggered.connect(lambda: self.exit())
         self.InterPolationOrderSlider.valueChanged.connect(lambda: self.InterpolationOrdersetting(self.InterPolationOrderSlider.value()) )
         #self.InterPolationOrderSlider.valueChanged.connect(lambda : self.interpolationPrep())
@@ -533,6 +553,7 @@ class Ui_MainWindow(object):
         self.LinearInterpRadioBtn.toggled.connect(lambda: self.interpolationPrep(0))
         self.PolynomialInterpRadioBtn.toggled.connect(lambda : self.interpolationPrep(1))
         self.ChunkNumberComboBox.currentIndexChanged.connect(lambda : self.setChunkOrder())
+        self.ErrorMappingButton.clicked.connect(lambda: self.errorMappingClicked())
         
 
         #golbal varaibles of constants declaration
@@ -543,7 +564,8 @@ class Ui_MainWindow(object):
         self.signalYMax=0
         self.signalXmin=0
         self.signalXmax=0
-        self.numChunks=1       
+        self.numChunks=1  
+        self.overLappingTimes=6     
         self.Chunkorder=0
         self.polyVectors = np.array([])
         self.axis=""
@@ -553,6 +575,8 @@ class Ui_MainWindow(object):
         self.InterpolationOrder=self.InterPolationOrderSlider.value()
         self.lcdOrder.display(self.InterpolationOrder)
         self.interpolationTypeFlag=-1
+
+        self.errorComboBoxFlag = 0
 
         #diasbling the num spinbox by default to avoid errors
         self.NumberChunksSpinBox.setDisabled(True)
@@ -581,6 +605,7 @@ class Ui_MainWindow(object):
         self.signalXMin=min(self.feature)
         self.signalXMax=max(self.feature)
         self.settingCurveLimits()
+        #print(numpy.linalg.norm(dataFile))
         self.draw(self.feature,self.target)
 
     def settingCurveLimits(self):
@@ -625,13 +650,292 @@ class Ui_MainWindow(object):
         self.errorMappingClickedTime=self.errorMappingClickedTime+1
         if self.errorMappingClickedTime % 2 != 0:
             self.ErrorMappingButton.setText("Stop EM")
+            self.errorMappingRun(1)
         elif self.errorMappingClickedTime %2 ==0:
             self.ErrorMappingButton.setText("Run EM")
+            self.errorMappingRun(0)
+
+    def errorMappingRun(self,text):
+        if text == 1:
+            if self.ErrorMapXaxis == "Chunks" and self.ErrorMapYaxis == "Inter":
+                if self.interpolationTypeFlag == 0 and self.numChunks ==1:
+                    self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
+                    #print(self.result)
+                    self.color=int(self.result)
+                    for i in range (self.numChunks):
+                        for j in range (self.InterPolationOrderSlider.value()):
+                            self.ErrorMappingGraph.setItem(i,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+                
+                
+                            
+                elif self.interpolationTypeFlag ==0 and self.numChunks >1 :
+                    
+                    self.fixedOverLapValue=int((int(self.ChooseOverLapComboBox.currentText())/100) * len(self.x_axis))
+                    #print(self.fixedOverLapValue)
+                    for i in range(1,self.numChunks+1,1):
+                        
+                        for j in range (self.InterPolationOrderSlider.value()):
+                                #self.result=numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*i:self.fixedOverLapValue+ len(self.x_axis)*(i+1) if i < self.numChunks else 1000])-numpy.linalg.norm(self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*i:self.fixedOverLapValue+ len(self.x_axis)*(i+1) if i < self.numChunks else 1000])/numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*i:self.fixedOverLapValue+ len(self.x_axis)*(i+1) if i < self.numChunks else 1000])
+                                #print(self.result)
+                                coeff=np.polyfit(self.feature[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1 ] , self.target[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1]  ,deg=1)
+                                self.polyVectors = coeff
+                                polynomial= np.poly1d(coeff)
+                                self.targetError=self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                                self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                                self.result=numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks+1 else 1000])-numpy.linalg.norm(self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
+                                self.color=int(self.result)
+                                self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
+                                self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+                            
+                elif self.interpolationTypeFlag == 1 and self.numChunks ==1:
+                   
+                    self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
+                    #print(self.result)
+                    self.color=int(self.result)
+                    for i in range (self.numChunks):
+                        for j in range (self.InterPolationOrderSlider.value()):
+                            self.ErrorMappingGraph.setItem(i,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+
+                elif self.interpolationTypeFlag == 1 and self.numChunks >1 :
+                    self.fixedOverLapValue=int((int(self.ChooseOverLapComboBox.currentText())/100) * len(self.x_axis))
+                    for i in range (1,self.numChunks+1,1):
+                        for j in range (self.InterPolationOrderSlider.value()):
+
+                            coeff=np.polyfit(self.feature[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1 ] , self.target[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1] ,deg = self.InterpolationOrder)
+                            polynomial= np.poly1d(coeff) 
+                            self.targetError=self.target[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                            self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                            self.result=numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks+1 else 1000])-numpy.linalg.norm(self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
+                            print(self.result)
+                            self.color=int(self.result)
+                            self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+             
+
+                self.ErrorMappingButton.setText("Run EM")
+
+            elif self.ErrorMapXaxis == "Inter" and self.ErrorMapYaxis == "Chunks":
+                if self.interpolationTypeFlag == 0 and self.numChunks ==1:
+                    self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
+                    print(self.result)
+                    self.color=int(self.result)
+                    for i in range (self.InterPolationOrderSlider.value()):
+                        for j in range (self.numChunks):
+                            self.ErrorMappingGraph.setItem(i+1,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i+1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+
+                elif self.interpolationTypeFlag ==0 and self.numChunks > 1:
+                    self.fixedOverLapValue=int((int(self.ChooseOverLapComboBox.currentText())/100) * len(self.x_axis))
+              
+                    #self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
+                    #print(self.result)
+                    for i in range (1,self.InterPolationOrderSlider.value()+1,1):
+                        for j in range (self.numChunks):
+                            coeff=np.polyfit(self.feature[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1 ] , self.target[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1] ,deg = 1)
+                            polynomial= np.poly1d(coeff)
+                            self.targetError=self.target[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                            self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                            self.result=numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks+1 else 1000])-numpy.linalg.norm(self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
+                            print(self.result)
+                            self.color=int(self.result)
+                            self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+                    
+                elif self.interpolationTypeFlag ==1 and self.numChunks ==1 :
+                    self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
+                    #print(self.result)
+                    self.color=int(self.result)
+                    for i in range (self.InterPolationOrderSlider.value()):
+                        for j in range (self.numChunks):
+                            self.ErrorMappingGraph.setItem(i+1,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i+1,j).setBackground(QtGui.QColor(self.result*1,self.result*1,self.color*10))
+
+                elif self.interpolationTypeFlag ==1 and self.numChunks >1 :
+                    self.fixedOverLapValue=int((int(self.ChooseOverLapComboBox.currentText())/100) * len(self.x_axis))
+                    for i in range (1,self.InterPolationOrderSlider.value()+1,1):
+                        for j in range (self.numChunks):
+                            coeff=np.polyfit(self.feature[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1 ] , self.target[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1] ,deg = self.InterpolationOrder)
+                            polynomial= np.poly1d(coeff) 
+                            self.targetError=self.target[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                            self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                            #self.result=numpy.linalg.norm(self.targetError)-numpy.linalg.norm(self.y_axisError)/numpy.linalg.norm(self.targetError)
+                            self.result=numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks+1 else 1000])-numpy.linalg.norm(self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
+                            self.color=int(self.result)
+                            self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+                    
+
+                self.ErrorMappingButton.setText("Run EM")
+            elif self.ErrorMapXaxis == "Over" and self.ErrorMapYaxis == "Chunks":
+                if self.interpolationTypeFlag==0:
+                    self.fixedOrderValue=self.ChooseOrderComboBox.currentIndex()+1
+                    #self.fixedOverLapValue=int((int(self.ChooseOverLapComboBox.currentText())/100) * len(self.x_axis))
+                    self.OverLapConst=0
+                    for i in range (6):
+                        for j in range(1,self.numChunks+1,1):
+                            
+                            self.OverLapValue=int((self.OverLapConst/100) * len(self.x_axis))
+                            coeff=np.polyfit(self.feature[(j-1)*int(self.maxLength/self.numChunks) : (j*int(self.maxLength/self.numChunks))-1 ] , self.target[(j-1)*int(self.maxLength/self.numChunks) : (j*int(self.maxLength/self.numChunks))-1] ,deg = 1)
+                            polynomial= np.poly1d(coeff)
+                            self.targetError=self.target[(j-1)*int(self.maxLength/self.numChunks):(j-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                            self.y_axisError=polynomial(self.feature[(j-1)*int(self.maxLength/self.numChunks):(j-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                            self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])
+                            print(self.result)
+                            self.color=int(self.result)
+                            self.ErrorMappingGraph.setItem(i,j-1,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i,j-1).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+                            
+                        self.OverLapConst=self.OverLapConst+5
+                
+                elif self.interpolationTypeFlag == 1:
+                    self.fixedOrderValue=self.ChooseOrderComboBox.currentIndex()+1
+                    self.OverLapConst=0
+                    for i in range(6):
+                        for j in range(1,self.numChunks+1,1):
+                            self.OverLapValue=int((self.OverLapConst/100) * len(self.x_axis))
+                            coeff=np.polyfit(self.feature[(j-1)*int(self.maxLength/self.numChunks) : (j*int(self.maxLength/self.numChunks))-1 ] , self.target[(j-1)*int(self.maxLength/self.numChunks) : (j*int(self.maxLength/self.numChunks))-1] ,deg = self.fixedOrderValue)
+                            self.polyVectors = coeff
+                            polynomial= np.poly1d(coeff) 
+                            self.targetError=self.target[(j-1)*int(self.maxLength/self.numChunks):(j-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                            self.y_axisError=polynomial(self.feature[(j-1)*int(self.maxLength/self.numChunks):(j-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                            #self.result=numpy.linalg.norm(self.targetError)-numpy.linalg.norm(self.y_axisError)/numpy.linalg.norm(self.targetError)
+                            self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])
+                            self.color=int(self.result)
+                            self.ErrorMappingGraph.setItem(i,j-1,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i,j-1).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+                        
+                        self.OverLapConst=self.OverLapConst+5
+
+                self.ErrorMappingButton.setText("Run EM")
 
 
+            elif self.ErrorMapXaxis == "Chunks" and self.ErrorMapYaxis == "Over":
+                if self.interpolationTypeFlag == 0:
+                    self.fixedOrderValue= self.ChooseOrderComboBox.currentIndex()+1
+                    self.OverLapConst=0
+                    for i in range (1,self.numChunks+1,1):
+                        for j in range (6):
+                            self.OverLapValue=int((self.OverLapConst/100) * len(self.x_axis))
+                            coeff=np.polyfit(self.feature[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1 ] , self.target[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1] ,deg = 1)
+                            polynomial= np.poly1d(coeff)
+                            self.targetError=self.target[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                            self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                            self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
+                            print(self.result)
+                            self.color=int(self.result)
+                            self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+
+                        self.OverLapConst=self.OverLapConst+5
+
+                elif self.interpolationTypeFlag == 1:
+                    self.fixedOrderValue= self.ChooseOrderComboBox.currentIndex()+1
+                    self.OverLapConst=0
+                    for i in range (1,self.numChunks+1,1):
+                        for j in range (6):
+                            self.OverLapValue=int((self.OverLapConst/100) * len(self.x_axis))
+                            coeff=np.polyfit(self.feature[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1 ] , self.target[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1] ,deg = self.fixedOrderValue)
+                            polynomial= np.poly1d(coeff)
+                            self.targetError=self.target[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                            self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                            self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
+                            print(self.result)
+                            self.color=int(self.result)
+                            self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+
+                        self.OverLapConst=self.OverLapConst+5
+
+
+                self.ErrorMappingButton.setText("Run EM")
+
+            elif self.ErrorMapXaxis == "Over" and self.ErrorMapYaxis == "Inter":
+                if self.interpolationTypeFlag == 0:
+                    self.fixedChunkValue= self.ChooseChunkComboBox.currentIndex()+1
+                    self.OverLapConst =0 
+                    for i in range (6):
+                        for j in range(1,self.InterPolationOrderSlider.value()+1,1):
+                            self.OverLapValue=int((self.OverLapConst/100) * len(self.x_axis))
+                            coeff=np.polyfit(self.feature[(j-1)*int(self.maxLength/self.numChunks) : (j*int(self.maxLength/self.numChunks))-1 ] , self.target[(j-1)*int(self.maxLength/self.numChunks) : (j*int(self.maxLength/self.numChunks))-1] ,deg = 1)
+                            polynomial= np.poly1d(coeff)
+                            self.targetError=self.target[(j-1)*int(self.maxLength/self.numChunks):(j-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                            self.y_axisError=polynomial(self.feature[(j-1)*int(self.maxLength/self.numChunks):(j-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                            self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])
+                            print(self.result)
+                            self.color=int(self.result)
+                            self.ErrorMappingGraph.setItem(i,j-1,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i,j-1).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+
+                        self.OverLapConst=self.OverLapConst+5
+                
+                elif self.interpolationTypeFlag == 1:
+                    self.fixedChunkValue= self.ChooseChunkComboBox.currentIndex()+1
+                    self.OverLapConst =0 
+                    for i in range (6):
+                        for j in range(1,self.InterPolationOrderSlider.value()+1,1):
+                            self.OverLapValue=int((self.OverLapConst/100) * len(self.x_axis))
+                            coeff=np.polyfit(self.feature[(j-1)*int(self.maxLength/self.numChunks) : (j*int(self.maxLength/self.numChunks))-1 ] , self.target[(j-1)*int(self.maxLength/self.numChunks) : (j*int(self.maxLength/self.numChunks))-1] ,deg = j)
+                            polynomial= np.poly1d(coeff)
+                            self.targetError=self.target[(j-1)*int(self.maxLength/self.numChunks):(j-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                            self.y_axisError=polynomial(self.feature[(j-1)*int(self.maxLength/self.numChunks):(j-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                            self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])
+                            print(self.result)
+                            self.color=int(self.result)
+                            self.ErrorMappingGraph.setItem(i,j-1,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i,j-1).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+
+                        self.OverLapConst=self.OverLapConst+5
+
+                self.ErrorMappingButton.setText("Run EM")
+
+            elif self.ErrorMapXaxis == "Inter" and self.ErrorMapYaxis == "Over":
+                if self.interpolationTypeFlag == 0:
+                    self.fixedChunkValue= self.ChooseChunkComboBox.currentIndex()+1
+                    self.OverLapConst =0 
+                    for i in range(1,self.InterPolationOrderSlider.value()+1,1):
+                        for j in range (6):
+                            self.OverLapValue=int((self.OverLapConst/100) * len(self.x_axis))
+                            coeff=np.polyfit(self.feature[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1 ] , self.target[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1] ,deg = 1)
+                            polynomial= np.poly1d(coeff)
+                            self.targetError=self.target[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                            self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                            self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
+                            print(self.result)
+                            self.color=int(self.result)
+                            self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,10*self.color))
+                        self.OverLapConst=self.OverLapConst+5
+
+                elif self.interpolationTypeFlag == 1:
+                    self.fixedChunkValue =self.ChooseChunkComboBox.currentIndex()+1
+                    self.OverLapConst =0
+                    for i in range(1,self.InterPolationOrderSlider.value()+1,1):
+                        for j in range (6):
+                            self.OverLapValue=int((self.OverLapConst/100) * len(self.x_axis))
+                            coeff=np.polyfit(self.feature[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1 ] , self.target[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1] ,deg = i)
+                            polynomial= np.poly1d(coeff)
+                            self.targetError=self.target[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                            self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                            self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
+                            print(self.result)
+                            self.color=int(self.result)
+                            self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem(str(self.result)))
+                            self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(1*self.color,1*self.color,10*self.color))
+                        self.OverLapConst=self.OverLapConst+5
+                        
+            self.ErrorMappingButton.setText("Run EM")
+        elif text==0:
+            self.ErrorMappingGraph.clearContents()
+
+                         
     def NumberChunksSpinBoxDisable(self):
         self.NumberChunksSpinBox.setDisabled(True)
         self.numChunks=1
+        self.ChooseOverLapComboBox.clear()
+        self.xAxisOverLapRadioBtn.setDisabled(True)
+        self.yAxisOverLapRadioBtn.setDisabled(True)
         self.ChunkNumberComboBoxEdit()
         self.ErrorOptionsEnabling(self.axis,self.type)
         self.MathDisplayArea.setRowCount(self.numChunks)
@@ -642,6 +946,7 @@ class Ui_MainWindow(object):
 
     def SetNumChunks(self,val):
         self.numChunks=val
+        
         self.MathDisplayArea.setRowCount(self.numChunks)
         self.ChunkNumberComboBoxEdit()
         self.ErrorOptionsEnabling(self.axis,self.type)
@@ -651,37 +956,66 @@ class Ui_MainWindow(object):
     def ErrorOptionsEnabling(self, axis, type):
         self.axis=axis
         self.type=type
+        
         if axis=="X":
             if type =="Inter":
                 self.yAxisInterpolationRadioBtn.setDisabled(True)
                 self.yAxisNumChunksRadioBtn.setDisabled(False)
+                self.yAxisOverLapRadioBtn.setDisabled(False)
                 self.ErrorMapXaxis="Inter"
-                self.ErrorMapYaxis="Chunks"
+
+                #self.ErrorMapYaxis="Chunks"
+
                 self.ErrorMappingGraph.setRowCount(self.InterPolationOrderSlider.value())
-                self.ErrorMappingGraph.setColumnCount(self.numChunks)
-            else:
+                #self.ErrorMappingGraph.setColumnCount(self.numChunks)
+                #self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
+            elif type == "Chunks":
                 self.yAxisNumChunksRadioBtn.setDisabled(True)
                 self.yAxisInterpolationRadioBtn.setDisabled(False)
+                self.yAxisOverLapRadioBtn.setDisabled(False)
                 self.ErrorMapXaxis="Chunks"
-                self.ErrorMapYaxis="Inter"
+                #self.ErrorMapYaxis="Inter"
                 self.ErrorMappingGraph.setRowCount(self.numChunks)
-                self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
+                #self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
+            else:
+                self.yAxisOverLapRadioBtn.setDisabled(True)
+                self.yAxisInterpolationRadioBtn.setDisabled(False)
+                self.yAxisNumChunksRadioBtn.setDisabled(False)
+                self.ErrorMapXaxis="Over"
+                self.ErrorMappingGraph.setRowCount(self.overLappingTimes)
         elif axis=="Y":
             if type =="Inter":
                 self.xAxisInterpolationRadioBtn.setDisabled(True)
                 self.xAxisNumChunksRadioBtn.setDisabled(False)
-                self.ErrorMapXaxis="Chunks"
+                self.xAxisOverLapRadioBtn.setDisabled(False)
+                #self.ErrorMapXaxis="Chunks"
                 self.ErrorMapYaxis="Inter"
-                self.ErrorMappingGraph.setRowCount(self.InterPolationOrderSlider.value())
+                #self.ErrorMappingGraph.setRowCount(self.InterPolationOrderSlider.value())
+                #self.ErrorMappingGraph.setColumnCount(self.numChunks)
+                self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
+
+            elif type =="Chunks":
+                self.xAxisNumChunksRadioBtn.setDisabled(True)
+                self.xAxisInterpolationRadioBtn.setDisabled(False)
+                self.xAxisOverLapRadioBtn.setDisabled(False)
+                #self.ErrorMapYaxis="Chunks"
+                self.ErrorMapYaxis="Chunks"
+                #self.ErrorMappingGraph.setRowCount(self.numChunks)
+                #self.ErrorMappingGraph.setColumnCount(self.InterpolationOrder)
                 self.ErrorMappingGraph.setColumnCount(self.numChunks)
 
             else:
-                self.xAxisNumChunksRadioBtn.setDisabled(True)
+                self.xAxisOverLapRadioBtn.setDisabled(True)
                 self.xAxisInterpolationRadioBtn.setDisabled(False)
-                self.ErrorMapYaxis="Chunks"
-                self.ErrorMapXaxis="Inter"
-                self.ErrorMappingGraph.setRowCount(self.numChunks)
-                self.ErrorMappingGraph.setColumnCount(self.InterpolationOrder)
+                self.xAxisNumChunksRadioBtn.setDisabled(False)
+                self.ErrorMapYaxis="Over"
+                self.ErrorMappingGraph.setColumnCount(self.overLappingTimes)
+        if self.numChunks >1 and self.errorComboBoxFlag == 0:
+            self.xAxisOverLapRadioBtn.setDisabled(False)
+            self.yAxisOverLapRadioBtn.setDisabled(False)
+            for i in range (0,30,5):
+                self.ChooseOverLapComboBox.addItem(str(i))
+            self.errorComboBoxFlag=1
         
 
     def ChunkNumberComboBoxEdit(self):
@@ -691,6 +1025,7 @@ class Ui_MainWindow(object):
         for i in np.arange(1,self.numChunks+1):
             self.ChunkNumberComboBox.addItem(str("Chunk # " +str(i)))
             self.ChooseChunkComboBox.addItem(str("Chunk # " +str(i)))
+        
 
         self.ErrorOptionsEnabling(self.axis,self.type)
 
@@ -718,40 +1053,51 @@ class Ui_MainWindow(object):
         if self.ExtrapolationCoef ==0:
             print("Please check the extrapolation slider as there mush be an error in its code lines")
         else:
-            maxLength=int(self.ExtrapolationCoef* 1000 *0.01)
-            print(maxLength)
+            self.maxLength=int(self.ExtrapolationCoef* 1000 *0.01)
+            print(self.maxLength)
             if self.numChunks==1:
                 coeff=np.polyfit(self.feature , self.target ,deg =1)
                 self.polyVectors=coeff
                 #print(self.polyVectors)
                 polynomial= np.poly1d(coeff)
-                self.interpolated_curve.setData(self.feature[0:maxLength-1],polynomial(self.feature[0:maxLength-1]), pen=None , symbol = '+')
+                self.x_axis=self.feature[0:self.maxLength-1]
+                self.y_axis=polynomial(self.feature[0:self.maxLength-1])
+                self.interpolated_curve.setData(self.x_axis,self.y_axis, pen=None , symbol = '+')
             else:
-                coeff=np.polyfit(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks) : (self.Chunkorder*int(maxLength/self.numChunks))-1 ] , self.target[(self.Chunkorder-1)*int(maxLength/self.numChunks) : (self.Chunkorder*int(maxLength/self.numChunks))-1]  ,deg=1)
+                coeff=np.polyfit(self.feature[(self.Chunkorder-1)*int(self.maxLength/self.numChunks) : (self.Chunkorder*int(self.maxLength/self.numChunks))-1 ] , self.target[(self.Chunkorder-1)*int(self.maxLength/self.numChunks) : (self.Chunkorder*int(self.maxLength/self.numChunks))-1]  ,deg=1)
                 self.polyVectors = coeff
                 #print(self.polyVectors)
                 polynomial= np.poly1d(coeff)
-                self.interpolated_curve.setData(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks):(self.Chunkorder-1)*int(maxLength/self.numChunks)+int(maxLength/self.numChunks)],polynomial(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks):(self.Chunkorder-1)*int(maxLength/self.numChunks)+int(maxLength/self.numChunks)]), pen=None ,symbol='+')
+                self.x_axis=self.feature[(self.Chunkorder-1)*int(self.maxLength/self.numChunks):(self.Chunkorder-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                self.y_axis=polynomial(self.feature[(self.Chunkorder-1)*int(self.maxLength/self.numChunks):(self.Chunkorder-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                #print(numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target))
+               
+                self.interpolated_curve.setData(self.x_axis,self.y_axis, pen=None ,symbol='+')
     def polyInterpolate(self):
         if self.ExtrapolationCoef ==0:
             print("Please check the extrapolation slider as there mush be an error in its code lines")
         else:
-            maxLength=int(self.ExtrapolationCoef* 1000 *0.01)
+            self.maxLength=int(self.ExtrapolationCoef* 1000 *0.01)
             if self.numChunks==1:
                 coeff=np.polyfit(self.feature , self.target ,deg =self.InterpolationOrder)
                 self.polyVectors = coeff
-            # print(self.polyVectors)
+                print(self.polyVectors)
                 polynomial= np.poly1d(coeff)
-                self.interpolated_curve.setData(self.feature[0:self.index+maxLength],polynomial(self.feature[0:self.index+maxLength]), pen=None ,symbol='o')
+                self.x_axis=self.feature[0:self.index+self.maxLength]
+                self.y_axis=polynomial(self.feature[0:self.index+self.maxLength])
+                self.interpolated_curve.setData(self.x_axis,self.y_axis, pen=None ,symbol='o')
             else:
                 # chunks_coeff=[]
-                coeff=np.polyfit(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks) : (self.Chunkorder*int(maxLength/self.numChunks))-1 ] , self.target[(self.Chunkorder-1)*int(maxLength/self.numChunks) : (self.Chunkorder*int(maxLength/self.numChunks))-1] ,deg = self.InterpolationOrder)
+                coeff=np.polyfit(self.feature[(self.Chunkorder-1)*int(self.maxLength/self.numChunks) : (self.Chunkorder*int(self.maxLength/self.numChunks))-1 ] , self.target[(self.Chunkorder-1)*int(self.maxLength/self.numChunks) : (self.Chunkorder*int(self.maxLength/self.numChunks))-1] ,deg = self.InterpolationOrder)
                 
                 self.polyVectors = coeff
                 # print(self.polyVectors)
                 polynomial= np.poly1d(coeff) 
                 #  self.interpolated_curve.setData(self.feature[0:self.index+1000/self.numChunks],polynomial(self.feature[0:self.index+1000/self.numChunks]), pen=None ,symbol='+')
-                self.interpolated_curve.setData(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks):(self.Chunkorder-1)*int(maxLength/self.numChunks)+int(maxLength/self.numChunks)],polynomial(self.feature[(self.Chunkorder-1)*int(maxLength/self.numChunks):(self.Chunkorder-1)*int(maxLength/self.numChunks)+int(maxLength/self.numChunks)]), pen=None ,symbol='o')
+                self.x_axis=self.feature[(self.Chunkorder-1)*int(self.maxLength/self.numChunks):(self.Chunkorder-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                print(len(self.x_axis))
+                self.y_axis=polynomial(self.feature[(self.Chunkorder-1)*int(self.maxLength/self.numChunks):(self.Chunkorder-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                self.interpolated_curve.setData(self.x_axis,self.y_axis, pen=None ,symbol='o')
 
 
     
