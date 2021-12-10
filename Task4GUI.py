@@ -609,6 +609,7 @@ class Ui_MainWindow(object):
         self.p=self.CurveFittingGraph.addPlot()   
         self.original_curve = self.p.plot()
         self.interpolated_curve = self.p.plot()
+        self.ExtrapolatedCurve=self.p.plot()
         
 
         #Functions declarations
@@ -1095,7 +1096,8 @@ class Ui_MainWindow(object):
                 self.y_axis=polynomial(self.feature[(self.Chunkorder-1)*int(self.maxLength/self.numChunks):(self.Chunkorder-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])               
                 self.interpolated_curve.setData(self.x_axis,self.y_axis, pen=None ,symbol='+')
                 self.linear_latex_equation(coeff)
-                self.write_error(residual)    
+                self.write_error(residual)   
+            self.ExtrapolationFunc(coeff)
     
     def polyInterpolate(self):
         if self.ExtrapolationCoef ==0:
@@ -1118,6 +1120,21 @@ class Ui_MainWindow(object):
                 self.interpolated_curve.setData(self.x_axis,self.y_axis, pen=None ,symbol='o')
                 self.polynomial_latex_equation(coeff)
                 self.write_error(residual)
+
+            self.ExtrapolationFunc(coeff)
+
+    def ExtrapolationFunc(self, coeff):
+        if self.ExtrapolationCoef ==100:
+            pass
+        elif self.ExtrapolationCoef <100:
+            polynomial= np.poly1d(coeff)
+            print(int((1000*0.01*self.ExtrapolationCoef)))
+            
+            self.x_axis=self.feature[int((1000*0.01*self.ExtrapolationCoef)+5):1000-1]
+            self.y_axis=polynomial(self.feature[int((1000*0.01*self.ExtrapolationCoef)+5):1000-1])
+            self.ExtrapolatedCurve.setData(self.x_axis,self.y_axis, pen=None , symbol = '+')
+            print(polynomial)
+
 
     
     def InterpolationOrdersetting(self, val):
@@ -1169,7 +1186,7 @@ class Ui_MainWindow(object):
         eq=r'{}x^{}'.format(coeff[0],self.InterpolationOrder)
         for i in range(self.InterpolationOrder-1,1,-1):
             eq+=r'{}x^{}'.format(coeff[self.InterpolationOrder-i],i)
-        eq+=r'{}x{}'.format(coeff[-2],coeff[-1])         
+        eq+=r'{}x{}'.format(coeff[-2],coeff[-1])        
         
         label=self.mathTex_to_QPixmap(eq)
         self.MathDisplayArea.setCellWidget(self.Chunkorder-1,0,label)
