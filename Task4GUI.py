@@ -14,7 +14,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTableWidget, QTableWidge
 
 
 from PyQt5.QtWidgets import * 
-
+from time import sleep
+import time
 from PyQt5 import QtCore, QtGui, QtWidgets
 import numpy as np
 
@@ -88,7 +89,7 @@ pg.setConfigOption('background', 'w')
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(954, 685)
+        MainWindow.resize(1033, 685)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -397,10 +398,10 @@ class Ui_MainWindow(object):
 
         self.xAxisOverLapRadioBtn = QRadioButton(self.widget_3)
         self.xAxisOverLapRadioBtn.setObjectName("xAxisOverLapRadioBtn")
-        self.xAxisOverLapRadioBtn.setGeometry(QRect(280, 90, 121, 17))
+        self.xAxisOverLapRadioBtn.setGeometry(QRect(300, 90, 121, 17))
         self.yAxisOverLapRadioBtn = QRadioButton(self.widget_3)
         self.yAxisOverLapRadioBtn.setObjectName("yAxisOverLapRadioBtn")
-        self.yAxisOverLapRadioBtn.setGeometry(QRect(280, 120, 121, 17))
+        self.yAxisOverLapRadioBtn.setGeometry(QRect(300, 120, 121, 17))
 
         self.verticalLayout_5.addWidget(self.widget_3)
         self.horizontalLayout.addWidget(self.DataContainer)
@@ -609,7 +610,6 @@ class Ui_MainWindow(object):
         self.p=self.CurveFittingGraph.addPlot()   
         self.original_curve = self.p.plot()
         self.interpolated_curve = self.p.plot()
-        self.ExtrapolatedCurve=self.p.plot()
         
 
         #Functions declarations
@@ -636,8 +636,8 @@ class Ui_MainWindow(object):
 
     def settingCurveLimits(self):
         self.p.setLimits(xMin=self.signalXMin)
-        #self.p.setLimits(yMin=self.signalYMin)
-        #self.p.setLimits(yMax=self.signalYMax)
+        self.p.setLimits(yMin=self.signalYMin)
+        self.p.setLimits(yMax=self.signalYMax)
 
     def setChunkOrder(self):
         self.Chunkorder= int(self.ChunkNumberComboBox.currentIndex())+1
@@ -688,17 +688,25 @@ class Ui_MainWindow(object):
                     self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
                     #print(self.result)
                     self.color=int(self.result)
+                    self.progressBarValue=int(100/self.numChunks)
                     for i in range (self.numChunks):
                         for j in range (self.InterPolationOrderSlider.value()):
                             self.ErrorMappingGraph.setItem(i,j,QTableWidgetItem())
                             self.ErrorMappingGraph.item(i,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
-                
-                
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
+                        
                             
                 elif self.interpolationTypeFlag ==0 and self.numChunks >1 :
                     
                     self.fixedOverLapValue=int((int(self.ChooseOverLapComboBox.currentText())/100) * len(self.x_axis))
                     #print(self.fixedOverLapValue)
+                    self.progressBarValue=int(100/self.numChunks)
                     for i in range(1,self.numChunks+1,1):
                         
                         for j in range (self.InterPolationOrderSlider.value()):
@@ -713,19 +721,38 @@ class Ui_MainWindow(object):
                                 self.color=int(self.result)
                                 self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
                                 self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
                             
                 elif self.interpolationTypeFlag == 1 and self.numChunks ==1:
                    
                     self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
                     #print(self.result)
                     self.color=int(self.result)
+                    self.progressBarValue=int(100/self.numChunks)
                     for i in range (self.numChunks):
                         for j in range (self.InterPolationOrderSlider.value()):
                             self.ErrorMappingGraph.setItem(i,j,QTableWidgetItem())
                             self.ErrorMappingGraph.item(i,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
 
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
+                    
+
                 elif self.interpolationTypeFlag == 1 and self.numChunks >1 :
                     self.fixedOverLapValue=int((int(self.ChooseOverLapComboBox.currentText())/100) * len(self.x_axis))
+                    self.progressBarValue=int(100/self.numChunks)
                     for i in range (1,self.numChunks+1,1):
                         for j in range (self.InterPolationOrderSlider.value()):
 
@@ -738,6 +765,14 @@ class Ui_MainWindow(object):
                             self.color=int(self.result)
                             self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
                             self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+                        
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
              
 
                 self.ErrorMappingButton.setText("Run EM")
@@ -747,16 +782,24 @@ class Ui_MainWindow(object):
                     self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
                     print(self.result)
                     self.color=int(self.result)
+                    self.progressBarValue=int(100/self.InterPolationOrderSlider.value())
                     for i in range (self.InterPolationOrderSlider.value()):
                         for j in range (self.numChunks):
-                            self.ErrorMappingGraph.setItem(i+1,j,QTableWidgetItem())
-                            self.ErrorMappingGraph.item(i+1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+                            self.ErrorMappingGraph.setItem(i,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+                        
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
 
                 elif self.interpolationTypeFlag ==0 and self.numChunks > 1:
                     self.fixedOverLapValue=int((int(self.ChooseOverLapComboBox.currentText())/100) * len(self.x_axis))
               
-                    #self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
-                    #print(self.result)
+                    self.progressBarValue=int(100/self.InterPolationOrderSlider.value())
                     for i in range (1,self.InterPolationOrderSlider.value()+1,1):
                         for j in range (self.numChunks):
                             coeff=np.polyfit(self.feature[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1 ] , self.target[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1] ,deg = 1)
@@ -768,18 +811,36 @@ class Ui_MainWindow(object):
                             self.color=int(self.result)
                             self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
                             self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
                     
                 elif self.interpolationTypeFlag ==1 and self.numChunks ==1 :
                     self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
                     #print(self.result)
                     self.color=int(self.result)
+                    self.progressBarValue=int(100/self.InterPolationOrderSlider.value())
                     for i in range (self.InterPolationOrderSlider.value()):
                         for j in range (self.numChunks):
-                            self.ErrorMappingGraph.setItem(i+1,j,QTableWidgetItem())
-                            self.ErrorMappingGraph.item(i+1,j).setBackground(QtGui.QColor(self.result*1,self.result*1,self.color*10))
+                            self.ErrorMappingGraph.setItem(i,j,QTableWidgetItem())
+                            self.ErrorMappingGraph.item(i,j).setBackground(QtGui.QColor(self.result*1,self.result*1,self.color*10))
+
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
 
                 elif self.interpolationTypeFlag ==1 and self.numChunks >1 :
                     self.fixedOverLapValue=int((int(self.ChooseOverLapComboBox.currentText())/100) * len(self.x_axis))
+                    self.progressBarValue=int(100/self.InterPolationOrderSlider.value())
                     for i in range (1,self.InterPolationOrderSlider.value()+1,1):
                         for j in range (self.numChunks):
                             coeff=np.polyfit(self.feature[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1 ] , self.target[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1] ,deg = self.InterpolationOrder)
@@ -791,12 +852,21 @@ class Ui_MainWindow(object):
                             self.color=int(self.result)
                             self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
                             self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
+                        
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
                     
 
                 self.ErrorMappingButton.setText("Run EM")
             elif self.ErrorMapXaxis == "Over" and self.ErrorMapYaxis == "Chunks":
                 if self.interpolationTypeFlag==0:
                     self.fixedOrderValue=self.ChooseOrderComboBox.currentIndex()+1
+                    self.progressBarValue=int(100/6)
                     #self.fixedOverLapValue=int((int(self.ChooseOverLapComboBox.currentText())/100) * len(self.x_axis))
                     self.OverLapConst=0
                     for i in range (6):
@@ -814,9 +884,16 @@ class Ui_MainWindow(object):
                             self.ErrorMappingGraph.item(i,j-1).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
                             
                         self.OverLapConst=self.OverLapConst+5
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    self.progressBarValue=self.progressBarValue+4
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
                 
                 elif self.interpolationTypeFlag == 1:
                     self.fixedOrderValue=self.ChooseOrderComboBox.currentIndex()+1
+                    self.progressBarValue=int(100/6)
                     self.OverLapConst=0
                     for i in range(6):
                         for j in range(1,self.numChunks+1,1):
@@ -833,6 +910,12 @@ class Ui_MainWindow(object):
                             self.ErrorMappingGraph.item(i,j-1).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
                         
                         self.OverLapConst=self.OverLapConst+5
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    self.progressBarValue=self.progressBarValue+4
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
 
                 self.ErrorMappingButton.setText("Run EM")
 
@@ -840,6 +923,7 @@ class Ui_MainWindow(object):
             elif self.ErrorMapXaxis == "Chunks" and self.ErrorMapYaxis == "Over":
                 if self.interpolationTypeFlag == 0:
                     self.fixedOrderValue= self.ChooseOrderComboBox.currentIndex()+1
+                    self.progressBarValue=int(100/self.numChunks)
                     self.OverLapConst=0
                     for i in range (1,self.numChunks+1,1):
                         for j in range (6):
@@ -855,9 +939,17 @@ class Ui_MainWindow(object):
                             self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
 
                         self.OverLapConst=self.OverLapConst+5
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
 
                 elif self.interpolationTypeFlag == 1:
                     self.fixedOrderValue= self.ChooseOrderComboBox.currentIndex()+1
+                    self.progressBarValue=int(100/self.numChunks)
                     self.OverLapConst=0
                     for i in range (1,self.numChunks+1,1):
                         for j in range (6):
@@ -873,6 +965,14 @@ class Ui_MainWindow(object):
                             self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
 
                         self.OverLapConst=self.OverLapConst+5
+                        
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
 
 
                 self.ErrorMappingButton.setText("Run EM")
@@ -880,6 +980,7 @@ class Ui_MainWindow(object):
             elif self.ErrorMapXaxis == "Over" and self.ErrorMapYaxis == "Inter":
                 if self.interpolationTypeFlag == 0:
                     self.fixedChunkValue= self.ChooseChunkComboBox.currentIndex()+1
+                    self.progressBarValue=int(100/6)
                     self.OverLapConst =0 
                     for i in range (6):
                         for j in range(1,self.InterPolationOrderSlider.value()+1,1):
@@ -895,9 +996,17 @@ class Ui_MainWindow(object):
                             self.ErrorMappingGraph.item(i,j-1).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
 
                         self.OverLapConst=self.OverLapConst+5
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    self.progressBarValue=self.progressBarValue+4
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
+
                 
                 elif self.interpolationTypeFlag == 1:
                     self.fixedChunkValue= self.ChooseChunkComboBox.currentIndex()+1
+                    self.progressBarValue=int(100/6)
                     self.OverLapConst =0 
                     for i in range (6):
                         for j in range(1,self.InterPolationOrderSlider.value()+1,1):
@@ -913,12 +1022,19 @@ class Ui_MainWindow(object):
                             self.ErrorMappingGraph.item(i,j-1).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
 
                         self.OverLapConst=self.OverLapConst+5
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    self.progressBarValue=self.progressBarValue+4
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
 
                 self.ErrorMappingButton.setText("Run EM")
 
             elif self.ErrorMapXaxis == "Inter" and self.ErrorMapYaxis == "Over":
                 if self.interpolationTypeFlag == 0:
                     self.fixedChunkValue= self.ChooseChunkComboBox.currentIndex()+1
+                    self.progressBarValue=int(100/self.InterPolationOrderSlider.value())
                     self.OverLapConst =0 
                     for i in range(1,self.InterPolationOrderSlider.value()+1,1):
                         for j in range (6):
@@ -933,10 +1049,18 @@ class Ui_MainWindow(object):
                             self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
                             self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,10*self.color))
                         self.OverLapConst=self.OverLapConst+5
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
 
                 elif self.interpolationTypeFlag == 1:
                     self.fixedChunkValue =self.ChooseChunkComboBox.currentIndex()+1
                     self.OverLapConst =0
+                    self.progressBarValue=int(100/self.InterPolationOrderSlider.value())
                     for i in range(1,self.InterPolationOrderSlider.value()+1,1):
                         for j in range (6):
                             self.OverLapValue=int((self.OverLapConst/100) * len(self.x_axis))
@@ -950,6 +1074,13 @@ class Ui_MainWindow(object):
                             self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem(str(self.result)))
                             self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(1*self.color,1*self.color,10*self.color))
                         self.OverLapConst=self.OverLapConst+5
+                        self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                        self.progressBarValue=self.progressBarValue+self.progressBarValue
+                    if 100-self.progressBarValue >0:
+                            self.progressBarValue=self.progressBarValue+(100-self.progressBarValue)
+                    self.ErrorMappingProgressBar.setValue(self.progressBarValue)
+                    sleep(2.0)
+                    self.ErrorMappingProgressBar.setValue(0)
                         
             self.ErrorMappingButton.setText("Run EM")
         elif text==0:
@@ -1097,7 +1228,7 @@ class Ui_MainWindow(object):
                 self.interpolated_curve.setData(self.x_axis,self.y_axis, pen=None ,symbol='+')
                 self.linear_latex_equation(coeff)
                 self.write_error(residual)   
-            self.ExtrapolationFunc(coeff)
+            self.ExtrapolationFunc(coeff)   
     
     def polyInterpolate(self):
         if self.ExtrapolationCoef ==0:
@@ -1123,6 +1254,7 @@ class Ui_MainWindow(object):
 
             self.ExtrapolationFunc(coeff)
 
+    
     def ExtrapolationFunc(self, coeff):
         if self.numChunks != 1:
             pass
@@ -1157,6 +1289,7 @@ class Ui_MainWindow(object):
         print(self.ExtrapolationCoef)
         self.interpolationPrep(self.interpolationTypeFlag)
         
+    
     def exit(self):
         sys.exit()
 
@@ -1188,7 +1321,7 @@ class Ui_MainWindow(object):
         eq=r'{}x^{}'.format(coeff[0],self.InterpolationOrder)
         for i in range(self.InterpolationOrder-1,1,-1):
             eq+=r'{}x^{}'.format(coeff[self.InterpolationOrder-i],i)
-        eq+=r'{}x{}'.format(coeff[-2],coeff[-1])        
+        eq+=r'{}x{}'.format(coeff[-2],coeff[-1])         
         
         label=self.mathTex_to_QPixmap(eq)
         self.MathDisplayArea.setCellWidget(self.Chunkorder-1,0,label)
