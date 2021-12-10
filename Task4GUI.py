@@ -636,8 +636,8 @@ class Ui_MainWindow(object):
 
     def settingCurveLimits(self):
         self.p.setLimits(xMin=self.signalXMin)
-        self.p.setLimits(yMin=self.signalYMin)
-        self.p.setLimits(yMax=self.signalYMax)
+        #self.p.setLimits(yMin=self.signalYMin)
+        #self.p.setLimits(yMax=self.signalYMax)
 
     def setChunkOrder(self):
         self.Chunkorder= int(self.ChunkNumberComboBox.currentIndex())+1
@@ -1129,9 +1129,10 @@ class Ui_MainWindow(object):
         elif self.ExtrapolationCoef <100:
             polynomial= np.poly1d(coeff)
             print(int((1000*0.01*self.ExtrapolationCoef)))
-            
-            self.x_axis=self.feature[int((1000*0.01*self.ExtrapolationCoef)+5):1000-1]
-            self.y_axis=polynomial(self.feature[int((1000*0.01*self.ExtrapolationCoef)+5):1000-1])
+            for i in range (int(len(self.x_axis)/2)):
+                self.x_axis.append(self.x_axis[i+((1000-(1000*0.01*self.ExtrapolationCoef)+5))])
+            self.x_axis=self.feature[int((1000*0.01*self.ExtrapolationCoef)+5):len(self.x_axis)]
+            self.y_axis=polynomial(self.feature[int((1000*0.01*self.ExtrapolationCoef)+5):len(self.x_axis)])
             self.ExtrapolatedCurve.setData(self.x_axis,self.y_axis, pen=None , symbol = '+')
             print(polynomial)
 
