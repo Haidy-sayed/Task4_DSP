@@ -1124,17 +1124,18 @@ class Ui_MainWindow(object):
             self.ExtrapolationFunc(coeff)
 
     def ExtrapolationFunc(self, coeff):
-        if self.ExtrapolationCoef ==100:
+        if self.numChunks != 1:
             pass
-        elif self.ExtrapolationCoef <100:
-            polynomial= np.poly1d(coeff)
-            print(int((1000*0.01*self.ExtrapolationCoef)))
-            for i in range (int(len(self.x_axis)/2)):
-                self.x_axis.append(self.x_axis[i+((1000-(1000*0.01*self.ExtrapolationCoef)+5))])
-            self.x_axis=self.feature[int((1000*0.01*self.ExtrapolationCoef)+5):len(self.x_axis)]
-            self.y_axis=polynomial(self.feature[int((1000*0.01*self.ExtrapolationCoef)+5):len(self.x_axis)])
-            self.ExtrapolatedCurve.setData(self.x_axis,self.y_axis, pen=None , symbol = '+')
-            print(polynomial)
+        else:
+            if self.ExtrapolationCoef ==100:
+                pass
+            elif self.ExtrapolationCoef <100:
+                polynomial= np.poly1d(coeff)
+                print(int((1000*0.01*self.ExtrapolationCoef)))
+                self.x_axis=self.feature[int((1000*0.01*self.ExtrapolationCoef)+5):5000]
+                self.y_axis=polynomial(self.feature[int((1000*0.01*self.ExtrapolationCoef)+5):5000])
+                self.ExtrapolatedCurve.setData(self.x_axis,self.y_axis, pen=None , symbol = '+')
+                print(polynomial)
 
 
     
