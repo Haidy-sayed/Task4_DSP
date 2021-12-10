@@ -88,7 +88,7 @@ pg.setConfigOption('background', 'w')
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1033, 685)
+        MainWindow.resize(954, 685)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
@@ -397,10 +397,10 @@ class Ui_MainWindow(object):
 
         self.xAxisOverLapRadioBtn = QRadioButton(self.widget_3)
         self.xAxisOverLapRadioBtn.setObjectName("xAxisOverLapRadioBtn")
-        self.xAxisOverLapRadioBtn.setGeometry(QRect(300, 90, 121, 17))
+        self.xAxisOverLapRadioBtn.setGeometry(QRect(280, 90, 121, 17))
         self.yAxisOverLapRadioBtn = QRadioButton(self.widget_3)
         self.yAxisOverLapRadioBtn.setObjectName("yAxisOverLapRadioBtn")
-        self.yAxisOverLapRadioBtn.setGeometry(QRect(300, 120, 121, 17))
+        self.yAxisOverLapRadioBtn.setGeometry(QRect(280, 120, 121, 17))
 
         self.verticalLayout_5.addWidget(self.widget_3)
         self.horizontalLayout.addWidget(self.DataContainer)
