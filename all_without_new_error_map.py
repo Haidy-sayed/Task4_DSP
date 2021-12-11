@@ -605,8 +605,10 @@ class Ui_MainWindow(object):
         self.InterpolationOrder=self.InterPolationOrderSlider.value()
         self.lcdOrder.display(self.InterpolationOrder)
         self.interpolationTypeFlag=-1
-
         self.errorComboBoxFlag = 0
+        self.ErrorMapXaxis=""
+        self.ErrorMapYaxis=""
+        
 
         #diasbling the num spinbox by default to avoid errors
         self.NumberChunksSpinBox.setDisabled(True)
@@ -624,11 +626,11 @@ class Ui_MainWindow(object):
 #        self.CurveFittingGraph.
         #Functions declarations
     def openFile(self):
-        try:
+        ##try:
             self.file_path=QFileDialog.getOpenFileName()[0]
             self.read_data(self.file_path)
-        except ParserError:
-            print("please choose a csv file")
+       # except ParserError:
+        #    print("please choose a csv file")
     def read_data(self,file_name):
         """loads the data from chosen file"""
         self.CurveFittingGraph.clear()
@@ -687,10 +689,10 @@ class Ui_MainWindow(object):
         self.errorMappingClickedTime=self.errorMappingClickedTime+1
         if self.errorMappingClickedTime % 2 != 0:
             self.ErrorMappingButton.setText("Stop EM")
-            self.errorMappingCalc(self.y_axis, self.feature, 1)
+            self.errorMappingCalc( 1)
         elif self.errorMappingClickedTime %2 ==0:
             self.ErrorMappingButton.setText("Run EM")
-            self.errorMappingCalc(self.y_axis,self.feature,0)
+            self.errorMappingCalc(0)
     
     def ploterrormap(self, arrErrorVals, en):
 
@@ -705,9 +707,8 @@ class Ui_MainWindow(object):
         #plt.xlabel()
         #plt.ylabel()
 
-    def errorMap(self, errorVals, enable):
+    def errorMap(self, errorVals):
         self.arr=[]
-      
       #  self.axes=[]
        # self.axes.append(self.numChunks)
         #self.axes.append(self.InterpolationOrder)
@@ -720,8 +721,42 @@ class Ui_MainWindow(object):
         #plt.colorbar()
         plt.show()
        
+    def errorMappingCalc(self, en):
+        if en==1:
+            if self.ErrorMapXaxis =="Chunks":
+                self.errorMappingCalcChunk(self.y_axis, self.feature, 0)
+            elif self.ErrorMapYaxis =="Chunks":
+                self.errorMappingCalcChunk(self.y_axis, self.feature, 1)
+            elif self.ErrorMapXaxis =="Inter":
+                self.errorMappingCalcOrder( self.feature, 0)
 
-    def errorMappingCalc(self, calculatedChunk, actaulChunk, enable):
+
+
+        elif en==0:
+            self.ErrorMappingGraph.clearContents()
+
+    def errorMappingCalcOrder(self, true, axEn):
+        errorValsOrder=[]
+        errsAvgOrder=[]
+        self.yVals=[]
+        for o in range(1,self.InterpolationOrder+1,1):
+                
+                coeff=np.polyfit(self.feature[(o-1)*int(1000/self.numChunks) : (o*int(1000/self.numChunks))-1 ] , self.target[(o-1)*int(1000/self.numChunks) : (o*int(self.maxLength/self.numChunks))-1] ,deg = o)
+                polynomial= np.poly1d(coeff) 
+                #self.yvalsOrder=polynomial(self.feature[(o-1)*int(1000/self.numChunks):(o-1)*int(1000/self.numChunks)+int(1000/self.numChunks)])
+                self.y_axisError=polynomial(self.feature[(o-1)*int(1000/self.numChunks):(o-1)*int(1000/self.numChunks)+int(1000/self.numChunks)])
+                self.yVals.append(self.y_axisError)
+                print(len(self.y_axisError))
+                for iter in range(0,int(1000/self.numChunks),1):
+                    pass
+                    #print(iter)
+                #normalized error
+                   # errorValsOrder[iter] = abs((self.yVals[iter] - true[iter])/self.yVals[iter])
+                    #errsAvgOrder.append(np.average(errorValsOrder))
+        self.errorMap(errsAvgOrder)
+
+
+    def errorMappingCalcChunk(self, calculatedChunk, actaulChunk, axEnable):
         #duplicateing the array just to get the same size *TESTING*
         errorVals = calculatedChunk
         errorValsOrder=calculatedChunk
@@ -730,12 +765,11 @@ class Ui_MainWindow(object):
         errsAvgChunk=[]
         
         #fining the error values for the number of chunks
-        if(self.ErrorMapXaxis == "Chunks"):
+        if(axEnable ==0):
             for j in range(self.numChunks):
                 for iterator in range(len(calculatedChunk)):
                     #normalized error
                     errorVals[iterator] = abs((calculatedChunk[iterator] - actaulChunk[iterator])/calculatedChunk[iterator])
-                    
                 errsAvgChunk.append(np.average(errorVals))
             #print(errsAvg)
             #for o in range(1,self.InterpolationOrder+1,1):
@@ -750,14 +784,13 @@ class Ui_MainWindow(object):
                     #normalized error
                  #   errorValsOrder[iter] = abs((self.y_axisError[iter] - actaulChunk[iter])/self.y_axisError[iter])
                # errsAvgOrder.append(np.average(errorValsOrder))
-
-            
-            errsAvg.append(errsAvgChunk)
+                errsAvg.append(errsAvgChunk)
             #print(errsAvg)
+            #print(errsAvgChunk)
            # errsAvg.append(errsAvgOrder)
-        elif(self.ErrorMapYaxis =="Chunks"):
+        elif(axEnable==1):
             pass
-        self.errorMap(errsAvgChunk, enable)
+        self.errorMap(errsAvgChunk)
 
 
                          
@@ -797,7 +830,7 @@ class Ui_MainWindow(object):
 
                 #self.ErrorMapYaxis="Chunks"
 
-                self.ErrorMappingGraph.setRowCount(self.InterPolationOrderSlider.value())
+                #self.ErrorMappingGraph.setRowCount(self.InterPolationOrderSlider.value())
                 #self.ErrorMappingGraph.setColumnCount(self.numChunks)
                 #self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
             elif type == "Chunks":
@@ -806,14 +839,14 @@ class Ui_MainWindow(object):
                 self.yAxisOverLapRadioBtn.setDisabled(False)
                 self.ErrorMapXaxis="Chunks"
                 #self.ErrorMapYaxis="Inter"
-                self.ErrorMappingGraph.setRowCount(self.numChunks)
+                #self.ErrorMappingGraph.setRowCount(self.numChunks)
                 #self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
             else:
                 self.yAxisOverLapRadioBtn.setDisabled(True)
                 self.yAxisInterpolationRadioBtn.setDisabled(False)
                 self.yAxisNumChunksRadioBtn.setDisabled(False)
                 self.ErrorMapXaxis="Over"
-                self.ErrorMappingGraph.setRowCount(self.overLappingTimes)
+                #self.ErrorMappingGraph.setRowCount(self.overLappingTimes)
         elif axis=="Y":
             if type =="Inter":
                 self.xAxisInterpolationRadioBtn.setDisabled(True)
@@ -823,7 +856,7 @@ class Ui_MainWindow(object):
                 self.ErrorMapYaxis="Inter"
                 #self.ErrorMappingGraph.setRowCount(self.InterPolationOrderSlider.value())
                 #self.ErrorMappingGraph.setColumnCount(self.numChunks)
-                self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
+                #self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
 
             elif type =="Chunks":
                 self.xAxisNumChunksRadioBtn.setDisabled(True)
@@ -833,20 +866,22 @@ class Ui_MainWindow(object):
                 self.ErrorMapYaxis="Chunks"
                 #self.ErrorMappingGraph.setRowCount(self.numChunks)
                 #self.ErrorMappingGraph.setColumnCount(self.InterpolationOrder)
-                self.ErrorMappingGraph.setColumnCount(self.numChunks)
+                #self.ErrorMappingGraph.setColumnCount(self.numChunks)
 
             else:
                 self.xAxisOverLapRadioBtn.setDisabled(True)
                 self.xAxisInterpolationRadioBtn.setDisabled(False)
                 self.xAxisNumChunksRadioBtn.setDisabled(False)
                 self.ErrorMapYaxis="Over"
-                self.ErrorMappingGraph.setColumnCount(self.overLappingTimes)
+                #self.ErrorMappingGraph.setColumnCount(self.overLappingTimes)
+
         if self.numChunks >1 and self.errorComboBoxFlag == 0:
             self.xAxisOverLapRadioBtn.setDisabled(False)
             self.yAxisOverLapRadioBtn.setDisabled(False)
             for i in range (0,30,5):
                 self.ChooseOverLapComboBox.addItem(str(i))
             self.errorComboBoxFlag=1
+        
         
 
     def ChunkNumberComboBoxEdit(self):
