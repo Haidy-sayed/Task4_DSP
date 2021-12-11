@@ -1346,7 +1346,7 @@ class Ui_MainWindow(object):
 
     #plot the mathTex expression
      ax = fig.add_axes([0, 0, 1, 1])
-     ax.axis('off')
+     ax.axis('off') 
      ax.patch.set_facecolor('none')
      t = ax.text(0, 0, r"$%s$" %(mathTex), ha='left', va='bottom', fontsize=15,color='blue')
 
