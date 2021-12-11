@@ -610,6 +610,7 @@ class Ui_MainWindow(object):
         self.p=self.CurveFittingGraph.addPlot()   
         self.original_curve = self.p.plot()
         self.interpolated_curve = self.p.plot()
+        self.ExtrapolatedCurve=self.p.plot()
         
 
         #Functions declarations
