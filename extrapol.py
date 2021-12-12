@@ -1232,6 +1232,7 @@ class Ui_MainWindow(object):
              print("Choose an intrpolation type from the radio buttons")
     def interpolationPrep(self,value):
         if value == 0:
+            
             self.interpolationTypeFlag =0
             self.interpolate()
         elif value ==1:

@@ -761,9 +761,8 @@ class Ui_MainWindow(object):
                             polynomial= np.poly1d(coeff) 
                             self.targetError=self.target[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
                             self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
-                            self.result=numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks+1 else 1000])-numpy.linalg.norm(self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
+                            self.result=self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks+1 else 1000]-self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000]/self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000]
                             print(self.result)
-                            self.color=int(self.result)
                             self.ErrorMappingGraph.setItem(i-1,j,QTableWidgetItem())
                             self.ErrorMappingGraph.item(i-1,j).setBackground(QtGui.QColor(self.color*1,self.color*1,self.color*10))
                         

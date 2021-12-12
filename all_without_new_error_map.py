@@ -714,10 +714,12 @@ class Ui_MainWindow(object):
         #self.axes.append(self.InterpolationOrder)
         #print(errorVals)
         #print(self.axes)
+        #for l in (0, self.InterpolationOrder):
         for k in range(0, self.InterpolationOrder):
-              self.arr.append(errorVals)
+            self.arr.append(errorVals)
         #print(self.arr)
-        plt.imshow(self.arr, cmap='cividis', interpolation='nearest')
+        #self.reshaped=np.reshape()
+        plt.imshow(self.arr, cmap='viridis', interpolation='nearest')
         #plt.colorbar()
         plt.show()
        
@@ -726,34 +728,36 @@ class Ui_MainWindow(object):
             if self.ErrorMapXaxis =="Chunks":
                 self.errorMappingCalcChunk(self.y_axis, self.feature, 0)
             elif self.ErrorMapYaxis =="Chunks":
+                print(self.ErrorMapYaxis =="Chunks")
                 self.errorMappingCalcChunk(self.y_axis, self.feature, 1)
-            elif self.ErrorMapXaxis =="Inter":
-                self.errorMappingCalcOrder( self.feature, 0)
+           # elif self.ErrorMapXaxis =="Inter":
+            #    self.errorMappingCalcOrder( self.feature, 0)
 
 
 
         elif en==0:
             self.ErrorMappingGraph.clearContents()
 
-    def errorMappingCalcOrder(self, true, axEn):
-        errorValsOrder=[]
-        errsAvgOrder=[]
-        self.yVals=[]
-        for o in range(1,self.InterpolationOrder+1,1):
+   # def errorMappingCalcOrder(self, true, axEn):
+    #    errorValsOrder=[]
+     #   errsAvgOrder=[]
+      #  self.yVals=[]
+
+       # for o in range(1,self.InterpolationOrder+1,1):
                 
-                coeff=np.polyfit(self.feature[(o-1)*int(1000/self.numChunks) : (o*int(1000/self.numChunks))-1 ] , self.target[(o-1)*int(1000/self.numChunks) : (o*int(self.maxLength/self.numChunks))-1] ,deg = o)
-                polynomial= np.poly1d(coeff) 
+        #        coeff=np.polyfit(self.feature[(o-1)*int(1000/self.numChunks) : (o*int(1000/self.numChunks))-1 ] , self.target[(o-1)*int(1000/self.numChunks) : (o*int(self.maxLength/self.numChunks))-1] ,deg = o)
+         #       polynomial= np.poly1d(coeff) 
                 #self.yvalsOrder=polynomial(self.feature[(o-1)*int(1000/self.numChunks):(o-1)*int(1000/self.numChunks)+int(1000/self.numChunks)])
-                self.y_axisError=polynomial(self.feature[(o-1)*int(1000/self.numChunks):(o-1)*int(1000/self.numChunks)+int(1000/self.numChunks)])
-                self.yVals.append(self.y_axisError)
-                print(len(self.y_axisError))
-                for iter in range(0,int(1000/self.numChunks),1):
-                    pass
+          #      self.y_axisError=polynomial(self.feature[(o-1)*int(1000/self.numChunks):(o-1)*int(1000/self.numChunks)+int(1000/self.numChunks)])
+           #     self.yVals.append(self.y_axisError)
+            #    print(len(self.y_axisError))
+             #   for iter in range(0,int(1000/self.numChunks),1):
+              #      pass
                     #print(iter)
                 #normalized error
                    # errorValsOrder[iter] = abs((self.yVals[iter] - true[iter])/self.yVals[iter])
                     #errsAvgOrder.append(np.average(errorValsOrder))
-        self.errorMap(errsAvgOrder)
+        #self.errorMap(errsAvgOrder)
 
 
     def errorMappingCalcChunk(self, calculatedChunk, actaulChunk, axEnable):
@@ -766,14 +770,36 @@ class Ui_MainWindow(object):
         
         #fining the error values for the number of chunks
         if(axEnable ==0):
+            print(self.numChunks)
+            self.progressBarfixed=int(100/self.numChunks)
+            print(self.progressBarfixed)
             for j in range(self.numChunks):
                 for iterator in range(len(calculatedChunk)):
                     #normalized error
                     errorVals[iterator] = abs((calculatedChunk[iterator] - actaulChunk[iterator])/calculatedChunk[iterator])
                 errsAvgChunk.append(np.average(errorVals))
-            #print(errsAvg)
+                self.ErrorMappingProgressBar.setValue(self.progressBarfixed)
+                self.progressBarfixed=self.progressBarfixed+self.progressBarfixed
+                if 100-self.progressBarfixed> 0:
+                    self.progressBarfixed=self.progressBarfixed+(100-self.progressBarfixed)
+                self.ErrorMappingProgressBar.setValue(self.progressBarfixed)
+                sleep(2.0)
+                self.ErrorMappingProgressBar.setValue(0)
+
+            print(errsAvg)
             #for o in range(1,self.InterpolationOrder+1,1):
-                
+            self.fixedOverLapValue=int((int(self.ChooseOverLapComboBox.currentText())/100) * len(self.x_axis))
+            
+            for i in range (1,self.numChunks+1,1):
+                for j in range (self.InterPolationOrderSlider.value()):
+
+                    coeff=np.polyfit(self.feature[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1 ] , self.target[(i-1)*int(self.maxLength/self.numChunks) : (i*int(self.maxLength/self.numChunks))-1] ,deg = j+1)
+                    polynomial= np.poly1d(coeff) 
+                    self.targetError=self.target[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)]
+                    self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
+                    self.result=numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks+1 else 999])-numpy.linalg.norm(self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 999])/self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000]                
+                errsAvgChunk.append(np.average(self.result))
+                  
              #   coeff=np.polyfit(self.feature[(o-1)*int(1000/self.numChunks) : (o*int(1000/self.numChunks))-1 ] , self.target[(o-1)*int(1000/self.numChunks) : (o*int(self.maxLength/self.numChunks))-1] ,deg = o)
               #  polynomial= np.poly1d(coeff) 
                 #self.yvalsOrder=polynomial(self.feature[(o-1)*int(1000/self.numChunks):(o-1)*int(1000/self.numChunks)+int(1000/self.numChunks)])
@@ -787,9 +813,24 @@ class Ui_MainWindow(object):
                 errsAvg.append(errsAvgChunk)
             #print(errsAvg)
             #print(errsAvgChunk)
-           # errsAvg.append(errsAvgOrder)
+            #errsAvg.append(errsAvgOrder)
         elif(axEnable==1):
-            pass
+            #j=self.numChunks
+            self.progressBarfixed=int(100/self.numChunks)
+            print("Inside order chunk!")
+            for k in range(self.InterpolationOrder):
+                for iterator in range(len(calculatedChunk)):
+                    #normalized error
+                    errorVals[iterator] = abs((calculatedChunk[iterator] - actaulChunk[iterator])/calculatedChunk[iterator])
+                errsAvgChunk.append(np.average(errorVals))
+                self.ErrorMappingProgressBar.setValue(self.progressBarfixed)
+                self.progressBarfixed=self.progressBarfixed+self.progressBarfixed
+                if 100-self.progressBarfixed> 0:
+                    self.progressBarfixed=self.progressBarfixed+(100-self.progressBarfixed)
+                self.ErrorMappingProgressBar.setValue(self.progressBarfixed)
+                sleep(2.0)
+                self.ErrorMappingProgressBar.setValue(0)
+        #errsAvgChunk=errsAvgChunk.reshape(2,(len(errsAvgChunk)/2))
         self.errorMap(errsAvgChunk)
 
 
@@ -827,12 +868,6 @@ class Ui_MainWindow(object):
                 self.yAxisNumChunksRadioBtn.setDisabled(False)
                 self.yAxisOverLapRadioBtn.setDisabled(False)
                 self.ErrorMapXaxis="Inter"
-
-                #self.ErrorMapYaxis="Chunks"
-
-                #self.ErrorMappingGraph.setRowCount(self.InterPolationOrderSlider.value())
-                #self.ErrorMappingGraph.setColumnCount(self.numChunks)
-                #self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
             elif type == "Chunks":
                 self.yAxisNumChunksRadioBtn.setDisabled(True)
                 self.yAxisInterpolationRadioBtn.setDisabled(False)
@@ -854,9 +889,7 @@ class Ui_MainWindow(object):
                 self.xAxisOverLapRadioBtn.setDisabled(False)
                 #self.ErrorMapXaxis="Chunks"
                 self.ErrorMapYaxis="Inter"
-                #self.ErrorMappingGraph.setRowCount(self.InterPolationOrderSlider.value())
-                #self.ErrorMappingGraph.setColumnCount(self.numChunks)
-                #self.ErrorMappingGraph.setColumnCount(self.InterPolationOrderSlider.value())
+          
 
             elif type =="Chunks":
                 self.xAxisNumChunksRadioBtn.setDisabled(True)
@@ -864,9 +897,7 @@ class Ui_MainWindow(object):
                 self.xAxisOverLapRadioBtn.setDisabled(False)
                 #self.ErrorMapYaxis="Chunks"
                 self.ErrorMapYaxis="Chunks"
-                #self.ErrorMappingGraph.setRowCount(self.numChunks)
-                #self.ErrorMappingGraph.setColumnCount(self.InterpolationOrder)
-                #self.ErrorMappingGraph.setColumnCount(self.numChunks)
+            
 
             else:
                 self.xAxisOverLapRadioBtn.setDisabled(True)
@@ -933,7 +964,6 @@ class Ui_MainWindow(object):
         else:
             self.maxLength=int(self.ExtrapolationCoef* 1000 *0.01)
             print(self.maxLength)
-            
             self.perform_interpolation(self.InterpolationOrder)
             self.polynomial_latex_equation(self.coeffs)
             self.write_error(self.residuals)
