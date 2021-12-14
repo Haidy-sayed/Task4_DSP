@@ -719,9 +719,10 @@ class Ui_MainWindow(object):
             self.arr.append(errorVals)
         #print(self.arr)
         #self.reshaped=np.reshape()
-        plt.imshow(self.arr, cmap='viridis', interpolation='nearest')
+        ima=plt.imshow(self.arr, cmap='viridis', interpolation='antialiased')
         #plt.colorbar()
-        plt.show()
+       # plt.imsave("errorMap.png", ima, cmap='viridis')
+
        
     def errorMappingCalc(self, en):
         if en==1:

@@ -772,10 +772,10 @@ class Ui_MainWindow(object):
               self.arr.append(errorVals)
         #print(self.arr)
         
-        #plt.imshow(self.arr, cmap='cividis', interpolation='nearest')
+        plt.imshow(self.arr, cmap='cividis', interpolation='nearest')
         
         #print(image)
-      #  plt.imsave('error_map.png',image)
+       # plt.imsave('errorMap.png',image)
         
         #plt.colorbar()
         #buf, size = fig.canvas.print_to_buffer()
@@ -868,7 +868,7 @@ class Ui_MainWindow(object):
                 sleep(2.0)
                 self.ErrorMappingProgressBar.setValue(0)
             self.label_13.setMaximumHeight(300) 
-            self.label_13.setPixmap(QPixmap(u"../final/Capture3.jpg"))
+            self.label_13.setPixmap(QPixmap(u"../errorMap.png"))
             self.label_13.setScaledContents(True)
         #errsAvgChunk=errsAvgChunk.reshape(2,(len(errsAvgChunk)/2))
         self.errorMap(errsAvgChunk)
