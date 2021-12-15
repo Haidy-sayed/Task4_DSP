@@ -620,6 +620,7 @@ class Ui_MainWindow(object):
         self.lcdOrder.setStyleSheet('background-color:black')
         #setting extrapolation coeff to 100% by default
         self.ExtrapolationCoef=100
+        self.errorMappingProg=1
 # =============================================================================
 #         self.p=self.CurveFittingGraph.addPlot()   
 #         self.original_curve = self.p.plot()
@@ -795,6 +796,11 @@ class Ui_MainWindow(object):
                                 self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
                                 self.result=numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks+1 else 1000])-numpy.linalg.norm(self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
                                 self.errArr.append(self.result)
+                                self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                                self.errorMappingProg+=1
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100)
+                    self.errorMappingProg=0
                 elif self.interpolationTypeFlag == 1 and self.numChunks ==1:
                    
                     self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
@@ -810,6 +816,11 @@ class Ui_MainWindow(object):
                             self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
                             self.result=numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks+1 else 1000])-numpy.linalg.norm(self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
                             self.errArr.append(self.result)
+                            self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                            self.errorMappingProg+=1
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100)
+                    self.errorMappingProg=0
             elif self.ErrorMapXaxis == "Inter" and self.ErrorMapYaxis == "Chunks":
                 if self.interpolationTypeFlag == 0 and self.numChunks ==1:
                     self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
@@ -827,6 +838,11 @@ class Ui_MainWindow(object):
                             self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
                             self.result=numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks+1 else 1000])-numpy.linalg.norm(self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
                             self.errArr.append(self.result)
+                            self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                            self.errorMappingProg+=1
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100)
+                    self.errorMappingProg=0
                 elif self.interpolationTypeFlag ==1 and self.numChunks ==1 :
                     self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
                     self.errArr.append(self.result)
@@ -841,6 +857,11 @@ class Ui_MainWindow(object):
                             #self.result=numpy.linalg.norm(self.targetError)-numpy.linalg.norm(self.y_axisError)/numpy.linalg.norm(self.targetError)
                             self.result=numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks+1 else 1000])-numpy.linalg.norm(self.y_axis[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.fixedOverLapValue+ len(self.x_axis)*(i-1):self.fixedOverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
                             self.errArr.append(self.result)
+                            self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                            self.errorMappingProg+=1
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100)
+                    self.errorMappingProg=0
 
             elif self.ErrorMapXaxis == "Over" and self.ErrorMapYaxis == "Chunks":
                 if self.interpolationTypeFlag==0:
@@ -857,7 +878,12 @@ class Ui_MainWindow(object):
                             self.y_axisError=polynomial(self.feature[(j-1)*int(self.maxLength/self.numChunks):(j-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
                             self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])
                             self.errArr.append(self.result)
+                            self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                            self.errorMappingProg+=1
                         self.OverLapConst=self.OverLapConst+5
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100)
+                    self.errorMappingProg=0
                 
                 elif self.interpolationTypeFlag == 1:
                     self.fixedOrderValue=self.ChooseOrderComboBox.currentIndex()+1
@@ -873,7 +899,13 @@ class Ui_MainWindow(object):
                             #self.result=numpy.linalg.norm(self.targetError)-numpy.linalg.norm(self.y_axisError)/numpy.linalg.norm(self.targetError)
                             self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])
                             self.errArr.append(self.result)
+                            self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                            self.errorMappingProg+=1
+                    
                         self.OverLapConst=self.OverLapConst+5
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100)
+                    self.errorMappingProg=0
 
             elif self.ErrorMapXaxis == "Chunks" and self.ErrorMapYaxis == "Over":
                 if self.interpolationTypeFlag == 0:
@@ -888,7 +920,13 @@ class Ui_MainWindow(object):
                             self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
                             self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
                             self.errArr.append(self.result)
+                            self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                            self.errorMappingProg+=1
+                    
                         self.OverLapConst=self.OverLapConst+5
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100)
+                    self.errorMappingProg=0
 
                 elif self.interpolationTypeFlag == 1:
                     self.fixedOrderValue= self.ChooseOrderComboBox.currentIndex()+1
@@ -902,7 +940,12 @@ class Ui_MainWindow(object):
                             self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
                             self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
                             self.errArr.append(self.result)
+                            self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                            self.errorMappingProg+=1
                         self.OverLapConst=self.OverLapConst+5
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100)
+                    self.errorMappingProg=0
 
             elif self.ErrorMapXaxis == "Over" and self.ErrorMapYaxis == "Inter":
                 if self.interpolationTypeFlag == 0:
@@ -917,7 +960,12 @@ class Ui_MainWindow(object):
                             self.y_axisError=polynomial(self.feature[(j-1)*int(self.maxLength/self.numChunks):(j-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
                             self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])
                             self.errArr.append(self.result)
+                            self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                            self.errorMappingProg+=1
                         self.OverLapConst=self.OverLapConst+5
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100)
+                    self.errorMappingProg=0
                 
                 elif self.interpolationTypeFlag == 1:
                     self.fixedChunkValue= self.ChooseChunkComboBox.currentIndex()+1
@@ -931,7 +979,12 @@ class Ui_MainWindow(object):
                             self.y_axisError=polynomial(self.feature[(j-1)*int(self.maxLength/self.numChunks):(j-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
                             self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(j-1):self.OverLapValue+ len(self.x_axis)*j if j < self.numChunks-1 else 1000])
                             self.errArr.append(self.result)
+                            self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                            self.errorMappingProg+=1
                         self.OverLapConst=self.OverLapConst+5
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100)
+                    self.errorMappingProg=0
 
 
             elif self.ErrorMapXaxis == "Inter" and self.ErrorMapYaxis == "Over":
@@ -947,7 +1000,12 @@ class Ui_MainWindow(object):
                             self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
                             self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
                             self.errArr.append(self.result)
+                            self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                            self.errorMappingProg+=1
                         self.OverLapConst=self.OverLapConst+5
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100)
+                    self.errorMappingProg=0
 
                 elif self.interpolationTypeFlag == 1:
                     self.fixedChunkValue =self.ChooseChunkComboBox.currentIndex()+1
@@ -961,13 +1019,20 @@ class Ui_MainWindow(object):
                             self.y_axisError=polynomial(self.feature[(i-1)*int(self.maxLength/self.numChunks):(i-1)*int(self.maxLength/self.numChunks)+int(self.maxLength/self.numChunks)])
                             self.result=numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])-numpy.linalg.norm(self.y_axis[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])/numpy.linalg.norm(self.target[self.OverLapValue+ len(self.x_axis)*(i-1):self.OverLapValue+ len(self.x_axis)*i if i < self.numChunks-1 else 1000])
                             self.errArr.append(self.result)
+                            self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
+                            self.errorMappingProg+=1
                         self.OverLapConst=self.OverLapConst+5
+                    if 100-self.errorMappingProg> 0:
+                        self.ErrorMappingProgressBar.setValue(100-self.errorMappingProg)
+                    self.errorMappingProg=0
             self.errorMap(self.errArr)     
             self.logHistory.append("End of error calculations")   
         #collapsing the error mapping area when shutting    
         elif en==0:
             self.logHistory.append("Collapsing the error area")
             self.ErrorMappingGraph.setMaximumHeight(0)
+            self.ErrorMappingProgressBar.setValue(0)
+
 
 
      
