@@ -198,7 +198,7 @@ class Ui_MainWindow(object):
         self.OrderOfInterpolationLabel.setObjectName("OrderOfInterpolationLabel")
         self.InterPolationOrderSlider = QtWidgets.QSlider(self.page2ForControls)
         self.InterPolationOrderSlider.setGeometry(QtCore.QRect(80, 210, 22, 171))
-        self.InterPolationOrderSlider.setMaximum(50)
+        self.InterPolationOrderSlider.setMaximum(20)
         self.InterPolationOrderSlider.setMinimum(2)
 
      #   self.InterPolationOrderSlider.setPageStep(9)
@@ -509,7 +509,7 @@ class Ui_MainWindow(object):
         self.toolBox.setItemText(self.toolBox.indexOf(self.page1ForControls), _translate("MainWindow", "Page 1"))
         self.OrderOfInterpolationLabel.setText(_translate("MainWindow", "Order of Interpolation"))
         self.order1Label.setText(_translate("MainWindow", "2nd order"))
-        self.order10Label.setText(_translate("MainWindow", "50th order"))
+        self.order10Label.setText(_translate("MainWindow", "20th order"))
         self.LCDOrderLabel.setText(_translate("MainWindow", "Order"))
         self.ChunkNumberSpinLabel.setText(_translate("MainWindow", "Chunk Number"))
         self.TypeOfInterpolationLabel.setText(_translate("MainWindow", "Type of Interpolation"))
@@ -749,7 +749,7 @@ class Ui_MainWindow(object):
         if en==0:
             self.logHistory.append("Collapsing the error area")
             self.logging()
-            self.ErrorMappingGraph.setMaximumHeight(0)
+            #self.ErrorMappingGraph.setMaximumHeight(0)
             self.ErrorMappingProgressBar.setValue(0)
         else:
             self.errArr=[]
@@ -783,11 +783,9 @@ class Ui_MainWindow(object):
                 self.ErrorMappingProgressBar.setValue(self.errorMappingProg)
             self.errorMap(self.errArr,x,y)     
             self.logHistory.append("End of error calculations") 
+            self.errorMappingClicked()
                 
 
-
-
-     
 
     def NumberChunksSpinBoxDisable(self):
         self.NumberChunksSpinBox.setDisabled(True)
