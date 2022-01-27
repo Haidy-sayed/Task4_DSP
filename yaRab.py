@@ -936,6 +936,7 @@ class Ui_MainWindow(object):
             if self.ExtrapolationCoef ==100:
                 pass
             elif self.ExtrapolationCoef <100:
+
                 polynomial= np.poly1d(coeff)
                 print(int((1000*0.01*self.ExtrapolationCoef)))
                 self.x_axis=self.feature[int((1000*0.01*self.ExtrapolationCoef)+5):5000]
@@ -1078,7 +1079,7 @@ class Ui_MainWindow(object):
         self.calculated_chunks=[]
 
         self.CurveFittingGraph.clear()
-        self.CurveFittingGraph.plot(self.feature[0:1000], self.target[0:1000], pen="red")
+        self.CurveFittingGraph.plot(self.feature[0:self.maxLength], self.target[0:self.maxLength], pen="red")
        
         self.split_into_chunks()     
         for i in range(len(self.feature_chunks)):

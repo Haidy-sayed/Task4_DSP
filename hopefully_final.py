@@ -755,7 +755,7 @@ class Ui_MainWindow(object):
         if en == 1:
             self.errArr=[]
             if self.ErrorMapXaxis == "Chunks" and self.ErrorMapYaxis == "Inter":
-                if self.interpolationTypeFlag == 0 and self.numChunks ==1:
+                if (self.interpolationTypeFlag == 0 or self.interpolationTypeFlag == 1) and self.numChunks ==1:
                     self.result=numpy.linalg.norm(self.target)-numpy.linalg.norm(self.y_axis)/numpy.linalg.norm(self.target)
                     self.errArr.append(self.result)      
                 elif self.interpolationTypeFlag ==0 and self.numChunks >1 :
